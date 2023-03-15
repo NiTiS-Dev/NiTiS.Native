@@ -51,12 +51,13 @@ partial class Build
 
 					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / RuntimeKind.WinX32);
 
-					EnsureCleanDirectory(@out);
+					//EnsureCleanDirectory(@out);
 
-					InheritedShell($"{prepare} -A arm64", GLFWPath);
-					InheritedShell(build, GLFWPath); // GLFW does not support arm64 processor yet .･ﾟﾟ･(／ω＼)･ﾟﾟ･.
+					//InheritedShell($"{prepare} -A arm64", GLFWPath);
+					//InheritedShell(build, GLFWPath); // GLFW does not support arm64 processor yet .･ﾟﾟ･(／ω＼)･ﾟﾟ･.
 
-					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / RuntimeKind.WinARM64);
+					//CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / RuntimeKind.WinARM64);
+					Logger.Warn("Generation GLFW::WinARM64 is canceled (GLFW dosnt support build for WinARM64)");
 				}
 				else if (OperatingSystem.IsLinux())
 				{
