@@ -19,7 +19,9 @@ jobs:
         env:
           - os: ubuntu-latest
             name: Linux
-            nuke_invoke: ./build.sh
+            nuke_invoke: |
+              chmod -x ./build.sh
+              ./build.sh
             extras: |
               sudo apt-get update
               sudo apt-get install -y xorg-dev 
@@ -29,7 +31,9 @@ jobs:
             extras: ""
           - os: macos-latest
             name: Darwin
-            nuke_invoke: ./build.sh
+            nuke_invoke: |
+              chmod -x ./build.sh
+              ./build.sh
             extras: ""
           
     name: ${{ matrix.env.name }} Build
