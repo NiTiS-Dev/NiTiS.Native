@@ -8,6 +8,8 @@ on:
     paths:
       - "build/submodules/GLFW"
       - "build/Build+Native+GLFW.cs"
+      - ".github/workflows/glfw.yml"
+
 jobs:
   Build:
     strategy: 
