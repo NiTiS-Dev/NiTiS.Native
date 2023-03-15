@@ -1,0 +1,55 @@
+name: GLFW
+on:
+  push:
+    branches-ignore:
+      - "ci/*"
+      - "feature/*"
+      - "dev"
+    paths:
+      - "build/submodules/GLFW"
+      - "build/Build+Native+GLFW.cs"
+jobs:
+  Build:
+    strategy: 
+      fail-fast: false
+      matrix:
+        env:
+          - os: ubuntu-latest
+            name: Linux
+            nuke_invoke: ./build.sh
+            extras: |
+              sudo apt-get update
+              sudo apt-get install -y xorg-dev 
+          - os: windows-latest
+            name: Windows
+            nuke_invoke: ./build.cmd
+            extras: ""
+          - os: macos-latest
+            name: Darwin
+            nuke_invoke: ./build.sh
+            extras: ""
+          
+    name: ${{ matrix.env.name }} Build
+    runs-on: ${{ matrix.env.os }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PUSHABLE_GITHUB_TOKEN }}
+      - name: Checkout submodules, configure git
+        run: |
+          git -c submodule.third_party/git-hooks.update=none submodule update --init --recursive
+          git config --local user.email "Observer@users.noreply.github.com"
+          git config --local user.name "NiTIS-Observer" 
+      - name: Extra prerequisites
+        run: |
+          echo running extras
+          ${{ matrix.env.extras }}
+      - name: Setup .NET 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.201
+      - name: Build GLFW
+        run: ${{ matrix.env.nuke_invoke }} GLFW
+        env:
+          PUSHABLE_GITHUB_TOKEN: ${{ secrets.PUSHABLE_GITHUB_TOKEN }}
+
