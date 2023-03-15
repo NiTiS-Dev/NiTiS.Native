@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PUSHABLE_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout submodules, configure git
         run: |
           git -c submodule.third_party/git-hooks.update=none submodule update --init --recursive
@@ -54,5 +54,5 @@ jobs:
       - name: Build GLFW
         run: ${{ matrix.env.nuke_invoke }} GLFW
         env:
-          PUSHABLE_GITHUB_TOKEN: ${{ secrets.PUSHABLE_GITHUB_TOKEN }}
+          PUSHABLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
