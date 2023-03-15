@@ -20,7 +20,7 @@ jobs:
           - os: ubuntu-latest
             name: Linux
             nuke_invoke: |
-              chmod -x ./build.sh
+              chmod +x ./build.sh
               ./build.sh
             extras: |
               sudo apt-get update
@@ -32,7 +32,7 @@ jobs:
           - os: macos-latest
             name: Darwin
             nuke_invoke: |
-              chmod -x ./build.sh
+              chmod +x ./build.sh
               ./build.sh
             extras: ""
           
@@ -58,5 +58,5 @@ jobs:
       - name: Build GLFW
         run: ${{ matrix.env.nuke_invoke }} GLFW
         env:
-          PUSHABLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
