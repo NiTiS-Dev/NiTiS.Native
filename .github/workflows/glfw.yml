@@ -1,5 +1,7 @@
 name: GLFW
 on:
+  workflow_dispatch:
+
   push:
     branches-ignore:
       - "ci/*"
@@ -8,7 +10,6 @@ on:
     paths:
       - "build/submodules/GLFW"
       - "build/Build+Native+GLFW.cs"
-      - ".github/workflows/glfw.yml"
 
 jobs:
   Build:
