@@ -1,14 +1,8 @@
 using Nuke.Common;
 
-class Build : NukeBuild
+partial class Build : NukeBuild
 {
-	/// Support plugins are available for:
-	///   - JetBrains ReSharper        https://nuke.build/resharper
-	///   - JetBrains Rider            https://nuke.build/rider
-	///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-	///   - Microsoft VSCode           https://nuke.build/vscode
-
-	public static int Main () => Execute<Build>(x => x.GenerateNative);
+	public static int Main() => Execute<Build>(x => x.Compile);
 
 	[Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
 	readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -29,9 +23,4 @@ class Build : NukeBuild
 		.Executes(() =>
 		{
 		});
-
-	Target GenerateNative => _ => _
-		.DependsOn(Restore)
-		.DependsOn(Compile)
-		.Executes(() => { });
 }
