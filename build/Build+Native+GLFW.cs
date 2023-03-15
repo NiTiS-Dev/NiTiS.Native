@@ -97,7 +97,7 @@ partial class Build
 			curBranch != "HEAD" &&
 			!string.IsNullOrWhiteSpace(curBranch) &&
 			!curBranch.StartsWith("ci/", StringComparison.OrdinalIgnoreCase) && // ignore other CI branches
-			!curBranch.StartsWith("dev", StringComparison.OrdinalIgnoreCase) && // submodule updates are done in PRs...
+			!curBranch.StartsWith("main", StringComparison.OrdinalIgnoreCase) && // submodule updates are done in PRs...
 			!curBranch.StartsWith("feature/", StringComparison.OrdinalIgnoreCase))
 		{
 			// it's assumed that the pushable token was used to checkout the repo
