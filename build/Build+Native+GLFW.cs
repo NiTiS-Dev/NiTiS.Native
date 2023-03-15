@@ -90,7 +90,7 @@ partial class Build
 
 	void PrUpdatedNativeBinary(string name)
 	{
-		var pushableToken = EnvironmentInfo.GetVariable<string>("PUSHABLE_GITHUB_TOKEN");
+		var pushableToken = EnvironmentInfo.GetVariable<string>("GITHUB_TOKEN");
 		var curBranch = GitCurrentBranch(RootDirectory);
 		if (!string.IsNullOrWhiteSpace(pushableToken) &&
 			GitHubActions.Instance?.Repository == "NiTiS-Dev/NiTiS.Native" &&
@@ -151,12 +151,12 @@ partial class Build
 				{
 					var github = new GitHubClient
 					(
-						new ProductHeaderValue("Silk.NET-CI"),
+						new ProductHeaderValue("NiTiS-Dev"),
 						new InMemoryCredentialStore(new Credentials(pushableToken))
 					);
 
 					var pr = github.PullRequest.Create
-							("dotnet", "Silk.NET", new($"Update {name} binaries", newBranch, curBranch))
+							("NiTiS-Dev", "NiTIS.Native", new($"Update {name} binaries", newBranch, curBranch))
 						.GetAwaiter()
 						.GetResult();
 				}
