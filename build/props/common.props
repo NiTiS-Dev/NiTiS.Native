@@ -1,0 +1,46 @@
+<Project InitialTargets="AddIcon">
+	<PropertyGroup>
+		<PackageOutputPath>$(SolutionDir)/output/packages/</PackageOutputPath>
+		<RepositoryUrl>https://github.com/NiTiS-Dev/NiTiS.Native</RepositoryUrl>
+		<RepositoryType>Git</RepositoryType>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+		<Authors>NiTiS-Dev and Contributors</Authors>
+
+		<!-- Package info -->
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>$(PackageTags);C#;.NET</PackageTags>
+		<PackageTags Condition="$(NativeAPI)!=''">$(PackageTags);Windows;Linux;Bindings;Wrapper;Native</PackageTags>
+		<Version Condition="$(Version)==''">0.0.5</Version>
+		<PackageVersion Condition="$(VersionSuffix)!=''">$(Version)-preview</PackageVersion>
+		<IncludeContentInPack Condition="$(NativeAPI)!=''">true</IncludeContentInPack>
+
+		<!-- Frameworks -->
+		<TargetFrameworks Condition="$(FrameworkPack) == 'Default'">netstandard2.0;net48;net6.0</TargetFrameworks>
+
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>latest</LangVersion>
+		<NoWarn>NETSDK1138</NoWarn>
+	</PropertyGroup>
+
+	<Target Name="AddIcon" Condition="$(CustomIcon) == ''">
+		<ItemGroup>
+			<None Include="$(SolutionDir)/assets/nitis-native.png"
+				  Pack="true"
+				  PackagePath="/" />
+		</ItemGroup>
+
+		<PropertyGroup>
+			<PackageIcon>nitis-native.png</PackageIcon>
+		</PropertyGroup>
+	</Target>
+
+	<ItemGroup Condition="$(BindingAPI)!=''">
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

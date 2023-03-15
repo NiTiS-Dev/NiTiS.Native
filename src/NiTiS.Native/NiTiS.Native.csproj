@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<FrameworkPack>Default</FrameworkPack>
+		<Nullable>enable</Nullable>
+
+		<Version>0.0.2</Version>
+		<VersionSuffix>preview</VersionSuffix>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>NiTiS.Native.GLFW</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)/build/props/common.props" />
+</Project>
