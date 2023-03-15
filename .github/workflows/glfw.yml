@@ -19,21 +19,17 @@ jobs:
         env:
           - os: ubuntu-latest
             name: Linux
-            nuke_invoke: |
-              chmod +x ./build.sh
-              ./build.sh
+            nuke_invoke: ./build.sh glfw
             extras: |
               sudo apt-get update
               sudo apt-get install -y xorg-dev 
           - os: windows-latest
             name: Windows
-            nuke_invoke: ./build.cmd
+            nuke_invoke: ./build.cmd glfw
             extras: ""
           - os: macos-latest
             name: Darwin
-            nuke_invoke: |
-              chmod +x ./build.sh
-              ./build.sh
+            nuke_invoke: ./build.sh glfw
             extras: ""
           
     name: ${{ matrix.env.name }} Build
@@ -45,7 +41,7 @@ jobs:
       - name: Checkout submodules, configure git
         run: |
           git -c submodule.third_party/git-hooks.update=none submodule update --init --recursive
-          git config --local user.email "observer[bot]@users.noreply.github.com"
+          git config --local user.email "observer@users.noreply.github.com"
           git config --local user.name "NiTiS-Observer" 
       - name: Extra prerequisites
         run: |
@@ -56,7 +52,7 @@ jobs:
         with:
           dotnet-version: 6.0.201
       - name: Build GLFW
-        run: ${{ matrix.env.nuke_invoke }} glfw
+        run: ${{ matrix.env.nuke_invoke }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
