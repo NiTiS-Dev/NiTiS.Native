@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<PackageOutputPath>$(SolutionDir)/output/packages/</PackageOutputPath>
 		<RepositoryUrl>https://github.com/NiTiS-Dev/NiTiS.Native</RepositoryUrl>
-		<RepositoryType>Git</RepositoryType>
+		<RepositoryType>git</RepositoryType>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<Authors>NiTiS-Dev and Contributors</Authors>
@@ -15,9 +15,12 @@
 		<Version Condition="$(Version)==''">0.0.5</Version>
 		<PackageVersion Condition="$(VersionSuffix)!=''">$(Version)-preview</PackageVersion>
 		<IncludeContentInPack Condition="$(NativeAPI)!=''">true</IncludeContentInPack>
+		<GenerateDocumentationFile Condition="$(NativeAPI)!=''">false</GenerateDocumentationFile>
 
 		<!-- Frameworks -->
 		<TargetFrameworks Condition="$(FrameworkPack) == 'Default'">netstandard2.0;net46;net6.0</TargetFrameworks>
+		<TargetFrameworks Condition="$(FrameworkPack) == 'Modern'">net7.0</TargetFrameworks>
+		<TargetFrameworks Condition="$(FrameworkPack) == 'ModernLTS'">net6.0</TargetFrameworks>
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>

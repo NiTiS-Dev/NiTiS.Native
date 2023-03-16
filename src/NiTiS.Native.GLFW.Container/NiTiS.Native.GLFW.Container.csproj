@@ -3,9 +3,8 @@
 		<FrameworkPack>Default</FrameworkPack>
 		<Nullable>enable</Nullable>
 		<NativeAPI>true</NativeAPI>
-		
-		<Version>0.0.2</Version>
-		<VersionSuffix>preview</VersionSuffix>
+
+		<PackageTags>GLFW;OpenGL;Vulkan</PackageTags>
 
 		<Description>Container for GLFW library.</Description>
 		<!-- Download license of GLFW -->
@@ -13,19 +12,18 @@
 
 	<!-- Move to props/ -->
 	<ItemGroup>
-		<Content Include="build\net46\$(PackageId).props" PackagePath="build\net46\$(PackageId).props" />
-		<Content Include="build\net5.0\$(PackageId).props" PackagePath="build\net5.0\$(PackageId).props" />
-		<Content Include="runtimes\linux-x64\libglfw.so.3" PackagePath="runtimes\linux-x64\libglfw.so.3" />
-		<Content Include="runtimes\osx-x64\libglfw.3.dylib" PackagePath="runtimes\osx-x64\libglfw.3.dylib" />
-		<Content Include="runtimes\osx-arm64\libglfw.3.dylib" PackagePath="runtimes\osx-arm64\libglfw.3.dylib" />
-		<Content Include="runtimes\win-x64\glfw3.dll" PackagePath="runtimes\win-x64\glfw3.dll" />
-		<Content Include="runtimes\win-arm64\glfw3.dll" PackagePath="runtimes\win-arm64\glfw3.dll" />
-		<Content Include="runtimes\win-x86\glfw3.dll" PackagePath="runtimes\win-x86\glfw3.dll" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Update="build\net5.0\NiTiS.Native.GLFW.Container.props">
-	    <PackagePath>build\net46\$(PackageId).props</PackagePath>
-	  </Content>
+		<Content Include="build/net46/$(PackageId).props" PackagePath="build/net46/$(PackageId).props" />
+		<Content Include="build/net5.0/$(PackageId).props" PackagePath="build/net5.0/$(PackageId).props" />
+		<Content Include="runtimes/linux-x64/libglfw.so.3" PackagePath="runtimes/linux-x64/libglfw.so.3" />
+		<Content Include="runtimes/osx-x64/libglfw.3.dylib" PackagePath="runtimes/osx-x64/libglfw.3.dylib" />
+		<Content Include="runtimes/osx-arm64/libglfw.3.dylib" PackagePath="runtimes/osx-arm64/libglfw.3.dylib" />
+		<Content Include="runtimes/win-x64/glfw3.dll" PackagePath="runtimes/win-x64/glfw3.dll" />
+		<Content Include="runtimes/win-arm64/glfw3.dll" PackagePath="runtimes/win-arm64/glfw3.dll" />
+		<Content Include="runtimes/win-x86/glfw3.dll" PackagePath="runtimes/win-x86/glfw3.dll" />
+
+		<Content Update="build/net5.0/NiTiS.Native.GLFW.Container.props">
+			<PackagePath>build/net5.0/$(PackageId).props</PackagePath>
+		</Content>
 	</ItemGroup>
 
 	<Import Project="$(SolutionDir)/build/props/common.props" />
