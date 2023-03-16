@@ -158,7 +158,11 @@ partial class Build
 								("NiTiS-Dev", "NiTIS.Native", new($"Update {name} binaries", newBranch, curBranch))
 							.GetAwaiter()
 							.GetResult();
-					} catch (Exception ignore) {}
+					}
+					catch (Exception ignore)
+					{
+						Logger.Warn($"PR fail: {ignore.GetType().Name}: {ignore.Message}");
+					}
 				}
 			}
 		}
