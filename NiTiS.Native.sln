@@ -16,11 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{270FA9EA-3
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiTiS.Native", "src\NiTiS.Native\NiTiS.Native.csproj", "{9F0CF918-4A0F-4AAE-B3EC-D28D9400039E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native", "src\NiTiS.Native\NiTiS.Native.csproj", "{9F0CF918-4A0F-4AAE-B3EC-D28D9400039E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{87514833-31E8-47BA-9664-ED83BA6896FA}"
 	ProjectSection(SolutionItems) = preProject
 		build\props\common.props = build\props\common.props
+		.github\workflows\glfw.yml = .github\workflows\glfw.yml
 	EndProjectSection
 EndProject
 Global

@@ -1,20 +1,16 @@
-﻿using Nuke.Common;
-using Nuke.Common.IO;
-using System;
-using static Nuke.Common.Tools.NSwag.NSwagTasks;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.Tooling.ProcessTasks;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using Nuke.Common.Tooling;
-using NiTiS.Native.NUKE;
+﻿using NiTiS.Native.NUKE;
+using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
-using Octokit.Internal;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Octokit;
+using Octokit.Internal;
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
@@ -65,7 +61,7 @@ partial class Build
 						.AssertZeroExitCode();
 					InheritedShell(build, GLFWPath)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libglfw.so"), GLFWRuntimes / RuntimeKind.LinuxX64);
+					CopyAll(@out.GlobFiles("src/libglfw.so*"), GLFWRuntimes / RuntimeKind.LinuxX64);
 				}
 				else if (OperatingSystem.IsMacOS())
 				{
@@ -156,10 +152,13 @@ partial class Build
 						new InMemoryCredentialStore(new Credentials(pushableToken))
 					);
 
-					var pr = github.PullRequest.Create
-							("NiTiS-Dev", "NiTIS.Native", new($"Update {name} binaries", newBranch, curBranch))
-						.GetAwaiter()
-						.GetResult();
+					try
+					{
+						var pr = github.PullRequest.Create
+								("NiTiS-Dev", "NiTIS.Native", new($"Update {name} binaries", newBranch, curBranch))
+							.GetAwaiter()
+							.GetResult();
+					} catch (Exception ignore) {}
 				}
 			}
 		}
