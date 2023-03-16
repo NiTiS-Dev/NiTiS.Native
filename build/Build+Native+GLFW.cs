@@ -36,7 +36,7 @@ partial class Build
 					InheritedShell(build, GLFWPath)
 						.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / RuntimeKind.WinX64);
+					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / ProcKind.WinX64);
 
 					EnsureCleanDirectory(@out);
 
@@ -45,7 +45,7 @@ partial class Build
 					InheritedShell(build, GLFWPath)
 					.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / RuntimeKind.WinX32);
+					CopyAll(@out.GlobFiles("src/Release/glfw3.dll"), GLFWRuntimes / ProcKind.WinX32);
 
 					//EnsureCleanDirectory(@out);
 
@@ -61,7 +61,7 @@ partial class Build
 						.AssertZeroExitCode();
 					InheritedShell(build, GLFWPath)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libglfw.so*"), GLFWRuntimes / RuntimeKind.LinuxX64);
+					CopyAll(@out.GlobFiles("src/libglfw.so*"), GLFWRuntimes / ProcKind.LinuxX64);
 				}
 				else if (OperatingSystem.IsMacOS())
 				{
@@ -69,7 +69,7 @@ partial class Build
 						.AssertZeroExitCode();
 					InheritedShell(build, GLFWPath)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libglfw.3.dylib"), GLFWRuntimes / RuntimeKind.osxX64);
+					CopyAll(@out.GlobFiles("src/libglfw.3.dylib"), GLFWRuntimes / ProcKind.osxX64);
 
 					EnsureCleanDirectory(@out);
 
@@ -78,7 +78,7 @@ partial class Build
 					InheritedShell(build, GLFWPath)
 						.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("src/libglfw.3.dylib"), GLFWRuntimes / RuntimeKind.osxARM64);
+					CopyAll(@out.GlobFiles("src/libglfw.3.dylib"), GLFWRuntimes / ProcKind.osxARM64);
 				}
 
 				PrUpdatedNativeBinary("GLFW");

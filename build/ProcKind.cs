@@ -1,29 +1,29 @@
 ﻿namespace NiTiS.Native.NUKE;
 
-public readonly struct RuntimeKind
+public readonly struct ProcKind
 {
 	private readonly string kind;
-    private RuntimeKind(string kind)
+    private ProcKind(string kind)
 	{
 		this.kind = kind;
 	}
-	public RuntimeKind()
+	public ProcKind()
 		=> throw new System.InvalidOperationException();
 
-    public static implicit operator string(RuntimeKind kind)
+    public static implicit operator string(ProcKind kind)
 		=> kind.kind;
 
 	/// <summary>
 	/// Windows runtime.
 	/// </summary>
-	public static readonly RuntimeKind WinX32, WinX64, WinARM64;
+	public static readonly ProcKind WinX32, WinX64, WinARM64;
 	/// <summary>
 	/// apple osx runtime.
 	/// </summary>
-	public static readonly RuntimeKind osxX64, osxARM64;
-	public static readonly RuntimeKind LinuxX64, LinuxARM64;
+	public static readonly ProcKind osxX64, osxARM64;
+	public static readonly ProcKind LinuxX64, LinuxARM64;
 
-	static RuntimeKind()
+	static ProcKind()
 	{
 		WinX32 = new("win-x86");
 		WinX64 = new("win-x64");
