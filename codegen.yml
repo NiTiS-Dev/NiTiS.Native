@@ -1,0 +1,11 @@
+GLFW:
+    base-namespace: NiTiS.Native.GLFW
+    include:
+    - "build/submodules/GLFW/include/GLFW/glfw3.h"
+    analyzer:
+        name: GLFWAnalyzer
+    
+    output:
+        target-directory: src/NiTiS.Native.GLFW/
+        main-class: NiTiS.Native.GLFW:Glfw
+        license: LICENSE.txt

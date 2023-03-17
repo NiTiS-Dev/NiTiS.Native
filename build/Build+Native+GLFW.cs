@@ -24,7 +24,7 @@ partial class Build
 			() =>
 			{
 				var @out = GLFWPath / "build";
-				var prepare = "cmake -S. -B build -D BUILD_SHARED_LIBS=ON";
+				var prepare = "cmake -S. -B build -D BUILD_SHARED_LIBS=ON -D GLFW_BUILD_DOCS=ON";
 				var build = $"cmake --build build --config Release";
 
 				EnsureCleanDirectory(@out);
