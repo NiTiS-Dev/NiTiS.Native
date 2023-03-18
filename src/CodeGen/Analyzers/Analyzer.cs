@@ -5,5 +5,5 @@ namespace CodeGen.Analyzers;
 
 public abstract class Analyzer
 {
-	public abstract void Analyze(string content, SignatureUnit unit);
+	public abstract void Analyze(CodeGenTask task, string content, CompilationSignature unit);
 }

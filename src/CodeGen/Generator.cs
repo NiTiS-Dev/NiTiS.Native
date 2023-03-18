@@ -1,4 +1,5 @@
 ﻿using CodeGen.Analyzers;
+using CodeGen.Generators;
 using CodeGen.Signature;
 using System;
 using System.Collections.Generic;
@@ -54,24 +55,34 @@ public static class Generator
 
 		Analyzer analyzer = AnalyzerDome.GetByName(task.Analyzer!.Name ?? "!!unspecified!!");
 
-		SignatureUnit unit = new();
+		CompilationSignature sign = new();
 
 		for (int i = 0; i < task?.IncludeFiles?.Count; i++)
 		{
 			string filePath = task.IncludeFiles[i];
-			analyzer.Analyze(File.ReadAllText(filePath), unit);
+			analyzer.Analyze(task, File.ReadAllText(filePath), sign);
 
 			SafeConsoleWriteLine($"Analyzed file {taskName}::{Path.GetFileName(filePath)}");
 		}
 
-		if (unit.LicenseContent is not null && task?.Output?.License is not null)
+		if (sign.LicenseContent is not null && task?.Output?.License is not null)
 		{
 			SafeConsoleWriteLine($"===SAVE={taskName.ToUpperInvariant()}=LICENSE===");
 
 			string licensePath = Path.Combine(task!.Output!.TargetDirectory!, task!.Output!.License!);
-			File.WriteAllText(licensePath, unit.LicenseContent);
+			File.WriteAllText(licensePath, sign.LicenseContent);
 
 			SafeConsoleWriteLine($"License created: {licensePath}");
+		}
+
+		TypeGenerator typeGen = new(task);
+		foreach (BasicTypeSignature typeSign in sign.Types)
+		{
+			typeGen.PreInitialize(typeSign);
+		}
+		foreach (BasicTypeSignature typeSign in sign.Types)
+		{
+			typeGen.Generate(typeSign);
 		}
 	}
 }

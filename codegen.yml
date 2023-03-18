@@ -9,3 +9,9 @@ GLFW:
         target-directory: src/NiTiS.Native.GLFW/
         main-class: NiTiS.Native.GLFW:Glfw
         license: LICENSE.txt
+
+    map:
+        ranges:
+            - from: GLFW_KEY_UNKNOWN
+              to: GLFW_KEY_LAST
+              name: GlfwKey

@@ -20,9 +20,26 @@ internal class Program
 		{
 			return -1001;
 		}
-		else
+		else if (args.Length == 1)
 		{
 			path = args[0];
+
+			if (!File.Exists(path))
+			{
+				return -1002;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < args.Length; i++)
+			{
+				string arg = args[i];
+
+				if (arg.StartsWith("-"))
+					continue;
+
+				path = args[i];
+			}
 
 			if (!File.Exists(path))
 			{

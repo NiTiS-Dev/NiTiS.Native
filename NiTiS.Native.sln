@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{270FA9EA-3
 		.gitignore = .gitignore
 		.gitmodules = .gitmodules
 		codegen.yml = codegen.yml
-		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -23,11 +22,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{87514833
 	ProjectSection(SolutionItems) = preProject
 		build\props\common.props = build\props\common.props
 		.github\workflows\glfw.yml = .github\workflows\glfw.yml
+		build\submodules\GLFW\include\GLFW\glfw3.h = build\submodules\GLFW\include\GLFW\glfw3.h
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.GLFW", "src\NiTiS.Native.GLFW\NiTiS.Native.GLFW.csproj", "{B6AA71C3-636A-4C49-910C-DA8AF03875AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGen", "src\CodeGen\CodeGen.csproj", "{DBE463EE-577E-4435-A24A-2B6801304542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGen", "src\CodeGen\CodeGen.csproj", "{DBE463EE-577E-4435-A24A-2B6801304542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

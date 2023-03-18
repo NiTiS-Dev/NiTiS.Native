@@ -74,6 +74,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "DeleteBindings",
               "GenerateBindings",
               "GLFW",
               "Restore"
@@ -92,6 +93,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "DeleteBindings",
               "GenerateBindings",
               "GLFW",
               "Restore"

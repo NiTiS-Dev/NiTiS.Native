@@ -20,7 +20,7 @@
 		<DefineConstants>$(DefineConstants);NiTiSGLFW</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
-		<Content Condition="'$(_NBT_GLFW_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)../../runtimes/$(_NBT_GLFW_NativeRuntime)/$(_NBT_GLFW_NativeLibName)">
+		<Content Condition="'$(_NBT_GLFW_NativeRuntime)' != '' AND $(_ExcludeGLFW) != 'false'" Include="$(MSBuildThisFileDirectory)../../runtimes/$(_NBT_GLFW_NativeRuntime)/$(_NBT_GLFW_NativeLibName)">
 			<Link>%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<Visible>False</Visible>

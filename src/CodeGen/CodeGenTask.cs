@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using YamlDotNet.Serialization;
 
 namespace CodeGen;
@@ -16,6 +19,41 @@ public sealed class CodeGenTask
 	public CodeGenOutput? Output { get; set; }
 	[YamlMember(Alias = "analyzer")]
 	public CodeGenAnalyzer? Analyzer { get; set; }
+	[YamlMember(Alias = "map")]
+	public CodeGenMap? Map { get; set; }
+
+	public string GetMapping(string? name)
+	{
+		if (name is null)
+			return string.Empty;
+
+		if (Map is not null && Map.Rename is not null)
+		{
+			if (Map.Rename.TryGetValue(name, out string? retusa)) {
+				return retusa;
+			}
+		}
+
+		return name;
+	}
+
+	public bool TryGetRangeByBegin(string? name, [NotNullWhen(true)] out CodeGenRange? range)
+	{
+		range = null;
+		if (Map?.Ranges is not null)
+		{
+			for (int i = 0; i < Map.Ranges.Length; i++)
+			{
+				if (Map.Ranges[i].From == name)
+				{
+					range = Map.Ranges[i];
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }
 
 [YamlSerializable]
@@ -35,4 +73,29 @@ public sealed class CodeGenAnalyzer
 {
 	[YamlMember(Alias = "name")]
 	public string? Name { get; set; }
+}
+
+[YamlSerializable]
+public sealed class CodeGenMap
+{
+	[YamlMember(Alias = "rename")]
+	public Dictionary<string, string>? Rename { get; set; }
+	[YamlMember(Alias = "ranges")]
+	public CodeGenRange[]? Ranges { get; set; } 
+}
+
+[YamlSerializable]
+public sealed class CodeGenRange
+{
+	[YamlMember(Alias = "from")]
+	public string? From { get; set; }
+	
+	[YamlMember(Alias = "to")]
+	public string? To { get; set; }
+
+	[YamlMember(Alias = "name")]
+	public string? Name { get; set; }
+
+	public override string ToString()
+		=> Name!;
 }
