@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using YamlDotNet.Serialization;
 
 namespace CodeGen;
@@ -78,10 +77,12 @@ public sealed class CodeGenAnalyzer
 [YamlSerializable]
 public sealed class CodeGenMap
 {
+	[YamlMember(Alias = "typemap")]
+	public Dictionary<string, string> TypeMap { get; set; } = new(0);
 	[YamlMember(Alias = "rename")]
-	public Dictionary<string, string>? Rename { get; set; }
+	public Dictionary<string, string> Rename { get; set; } = new(0);
 	[YamlMember(Alias = "ranges")]
-	public CodeGenRange[]? Ranges { get; set; } 
+	public CodeGenRange[] Ranges { get; set; } = Array.Empty<CodeGenRange>();
 }
 
 [YamlSerializable]

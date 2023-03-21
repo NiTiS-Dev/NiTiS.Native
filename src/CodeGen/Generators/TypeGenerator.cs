@@ -157,14 +157,14 @@ public sealed class TypeGenerator
 			}
 
 			cw.Write('<');
-			foreach (BasicTypeSignature arg in fun.Arguments)
+			foreach (ArgumentSignature arg in fun.Arguments)
 			{
-				cw.Write($"{arg.Name}, ");
+				cw.Write($"{arg.Type.Name} /* {arg.NativeName} */, ");
 			}
 			cw.Write(fun.ReturnType.Name);
 			cw.Write('>');
 
-			cw.Write("@__");
+			cw.Write(" @__");
 			cw.Write(fun.Name);
 			cw.Write(";");
 

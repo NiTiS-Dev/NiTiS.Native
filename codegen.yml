@@ -12,6 +12,14 @@ GLFW:
     map:
         typemap:
             GLFWmonitor: GlfwMonitor
+            GLFWwindow: GlfwWindow
+            GLFWcursor: GlfwCursor
+            GLFWgammaramp: GlfwGammaRamp
+            GLFWimage: GlfwImage
+            GLFWvidmode: GlfwVideoMode
+            GLFWallocator: GlfwAllocator
+            GLFWglproc: nint
+            GLFWvkproc: nint
 
         rename:
             0: Number0

@@ -2,6 +2,7 @@
 using NiTiS.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -66,7 +67,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 		{
 			MatchCollection matches = FunctionRegex().Matches(content);
 
-			StaticClassSignature glfw = sign.GetTypeOrCreate<StaticClassSignature>(task?.Output?.MainClass);
+			StaticClassSignature glfw = sign.GetTypeOrCreate<StaticClassSignature>(task.Output?.MainClass);
 
 			foreach (Match match in matches)
 			{
@@ -79,7 +80,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				FunctionSignature newFunc = new()
 				{
 					Name = functionName,
-					ReturnType = GetType(returnType, returnIsUnsigned)
+					ReturnType = GetType(task, returnType, ref Unsafe.NullRef<string?>(), returnIsUnsigned)
 				};
 
 
@@ -89,9 +90,15 @@ public sealed partial class GLFWAnalyzer : Analyzer
 					foreach (string argType in args.Value.Split(','))
 					{
 						argI++;
-						BasicTypeSignature argument = GetType(argType, removeArgName: true);
-						Console.WriteLine($"{newFunc.ReturnType} {functionName} @{argI} {argument.Name} #{argType}");
-						newFunc.Arguments.Add(argument);
+						string? argumentName = null;
+						BasicTypeSignature argument = GetType(task, argType, ref argumentName);
+						Console.WriteLine($">>{newFunc.ReturnType}<< !{functionName}! ({argI}) :{argument.Name}: #{argType}#");
+						
+						newFunc.Arguments.Add(new ArgumentSignature()
+						{
+							NativeName = argumentName,
+							Type = argument
+						});
 					}
 				}
 
@@ -124,20 +131,21 @@ public sealed partial class GLFWAnalyzer : Analyzer
 		}
 	}
 
-	private unsafe BasicTypeSignature GetType(string typeName, bool? unsigned = null, bool removeArgName = false)
+	private unsafe BasicTypeSignature GetType(CodeGenTask task, string typeName, ref string? argumentNameRetusa, bool? unsigned = null)
 	{
 		typeName = typeName.Trim();
 
-        if (removeArgName)
+        if (!Unsafe.IsNullRef(ref argumentNameRetusa))
 		{ // Remove last word (arg name)
 			Match match = LastWordRegex().Match(typeName);
 			if (match.Index != -1)
 			{
+				argumentNameRetusa = typeName.Substring(match.Index, match.Length).Trim();
 				typeName = typeName.Remove(match.Index, match.Length);
 			}
 			else
 			{
-                Console.WriteLine($"[WRN]: {typeName} not in regex");
+                Console.WriteLine($"[WRN]: {typeName} has no argument name");
             }
 		}
 
@@ -158,7 +166,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 		}
 		
 		int ptrs = 0;
-		for (int i = 0; i < typeName.Length; i++)
+		for (int i = 0; i < typeName.Length;)
 		{
 			char c = typeName[i];
 			if (c is '*' or '&' or '[')
@@ -166,11 +174,15 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				ptrs++;
 				typeName = typeName.Remove(i, 1);
 			}
+			else
+			{
+				i++;
+			}
 		}
 
-		return GetType(typeName, unsigned.GetValueOrDefault(), ptrs);
+		return GetType(task, typeName, unsigned.GetValueOrDefault(), ptrs);
 	}
-	private unsafe BasicTypeSignature GetType(string typeName, bool unsigned, int pointers)
+	private unsafe BasicTypeSignature GetType(CodeGenTask task, string typeName, bool unsigned, int pointers)
 	{
 		if (typeName is "void")
 		{
@@ -199,7 +211,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				break;
 
 			case "char":
-				if (pointers is 1)
+				if (pointers >= 1)
 				{
 					selectedType = StdTypes.CString;
 					pointers--;
@@ -221,9 +233,24 @@ public sealed partial class GLFWAnalyzer : Analyzer
 			case "float":
 				selectedType = StdTypes.Float;
 				break;
-
+			case "double":
+				selectedType = StdTypes.Double;
+				break;
+			case "uint64_t":
+				selectedType = StdTypes.ULong;
+				break;
+			case "int64_t":
+				selectedType = StdTypes.Long;
+				break;
 		}
 
-		return new StaticClassSignature() { Name = (selectedType?.Name ?? $"__INVALIDOF__{typeName}__") + '*'.Repeat(pointers) };
+		if (task.Map?.TypeMap.TryGetValue(typeName, out string? name) ?? false) {
+			return new StaticClassSignature() { Name = name + '*'.Repeat(pointers) };
+		}
+
+		if (selectedType is null)
+			return new StaticClassSignature() { Name = "_" + typeName + "_" + '*'.Repeat(pointers) };
+		else
+			return new StaticClassSignature() { Name = typeName + '*'.Repeat(pointers) };
 	}
 }

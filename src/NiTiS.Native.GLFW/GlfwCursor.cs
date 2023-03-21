@@ -3,15 +3,15 @@
 namespace NiTiS.Native.GLFW;
 
 /// <summary>
-/// Monitor pointer wrap.
+/// Cursor pointer wrap.
 /// </summary>
-public struct GlfwMonitor
+public struct GlfwCursor
 {
 	/// <summary>
 	/// <see cref="GlfwMonitor"/> is wrapper for pointer referencing, calling this constructor cause an exception.
 	/// </summary>
 	/// <exception cref="InvalidOperationException">Calling constructor is not allowed.</exception>
-	public GlfwMonitor()
+	public GlfwCursor()
 	{
 		throw new InvalidOperationException();
 	}
