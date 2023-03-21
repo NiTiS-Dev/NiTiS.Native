@@ -146,8 +146,28 @@ public sealed class TypeGenerator
 		{
 
 			cw.PushHide();
+			cw.PushCompilerGenerated();
 			cw.WriteIndent();
-			cw.Write($"public {(sign.IsStatic ? "static " : string.Empty)}unsafe delegate* {(fun.Convention == CallConv.Default ? "" : "unmanaged[" + fun.Convention.ToString() + "]")}<void> __{fun.Name};");
+			cw.Write("public ");
+			cw.Write(sign.IsStatic ? "static " : string.Empty);
+			cw.Write("unsafe delegate* ");
+			if (!fun.Convention.IsImplicit)
+			{
+				cw.Write($"unmanaged[{fun.Convention.Name}] ");
+			}
+
+			cw.Write('<');
+			foreach (BasicTypeSignature arg in fun.Arguments)
+			{
+				cw.Write($"{arg.Name}, ");
+			}
+			cw.Write(fun.ReturnType.Name);
+			cw.Write('>');
+
+			cw.Write("@__");
+			cw.Write(fun.Name);
+			cw.Write(";");
+
 			cw.WriteLine();
 			cw.WriteLine();
 		}
@@ -181,22 +201,5 @@ public sealed class TypeGenerator
 		}
 
 		return new(buffer.Slice(0, bufferIndex));
-	}
-
-	private class StringLenComparer : IComparer<string>
-	{
-		public int Compare(string x, string y)
-		{
-			int lengthComparison = x.Length.CompareTo(y.Length);
-
-			if (lengthComparison == 0)
-			{
-				return x.CompareTo(y);
-			}
-			else
-			{
-				return lengthComparison;
-			}
-		}
 	}
 }

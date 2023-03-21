@@ -10,6 +10,9 @@ GLFW:
         main-class: NiTiS.Native.GLFW:Glfw
 
     map:
+        typemap:
+            GLFWmonitor: GlfwMonitor
+
         rename:
             0: Number0
             1: Number1

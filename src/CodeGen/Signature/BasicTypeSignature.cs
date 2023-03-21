@@ -8,6 +8,9 @@ public abstract class BasicTypeSignature : UnitSignature
 	public string Name { get; set; } = $"__UNNAMED{++__index__}__";
 	public abstract bool IsStatic { get; }
 	public abstract string TypeKeyword { get; }
+
+	public override string ToString()
+		=> Name;
 }
 
 public sealed class StructSignature : NonEnumSignature

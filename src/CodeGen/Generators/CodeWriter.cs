@@ -36,13 +36,13 @@ public sealed class CodeWriter : StringWriter
 		base.Write(Indent());
 	}
 
-	private string Indent()
+	private string Indent(ushort offset = 0)
 	{
-		if (Depth >= 32)
+		if (Depth + offset >= 32)
 		{
 			return Tabulatum;
 		}
 
-		return Tabulatum.Substring(32 - Depth);
+		return Tabulatum.Substring(32 - Depth - offset);
 	}
 }
