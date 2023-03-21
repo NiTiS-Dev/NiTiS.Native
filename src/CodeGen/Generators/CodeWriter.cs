@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Text;
 
 namespace CodeGen.Builders;
 
 public sealed class CodeWriter : StringWriter
 {
-	private static readonly string CompilerGenerated = "[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]";
+	private static readonly string CompilerGenerated = "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]";
+	private static readonly string BrowsableHide = "[global::System.ComponentModel.BrowsableAttribute(false)]";
 	private static readonly string Tabulatum = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"; // 32 tabulations
 	public int Depth { get; set; } = 0;
 
@@ -21,6 +23,8 @@ public sealed class CodeWriter : StringWriter
 	}
 	public void PushCompilerGenerated()
 		=> WriteLine(CompilerGenerated);
+	public void PushHide()
+		=> WriteLine(BrowsableHide);
 	public override void WriteLine(string? value)
 	{
 		WriteIndent();

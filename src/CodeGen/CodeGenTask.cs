@@ -96,6 +96,12 @@ public sealed class CodeGenRange
 	[YamlMember(Alias = "name")]
 	public string? Name { get; set; }
 
+	[YamlMember(Alias = "prefix")]
+	public string? Prefix { get; set; }
+
+	[YamlMember(Alias = "postfix")]
+	public string? Postfix { get; set; }
+
 	public override string ToString()
 		=> Name!;
 }

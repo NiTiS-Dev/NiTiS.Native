@@ -8,10 +8,77 @@ GLFW:
     output:
         target-directory: src/NiTiS.Native.GLFW/
         main-class: NiTiS.Native.GLFW:Glfw
-        license: LICENSE.txt
 
     map:
+        rename:
+            0: Number0
+            1: Number1
+            2: Number2
+            3: Number3
+            4: Number4
+            5: Number5
+            6: Number6
+            7: Number7
+            8: Number8
+            9: Number9
+
+            DpadUp: DPadUp
+            DpadRight: DPadRight 
+            DpadDown: DPadDown
+            DpadLeft: DPadLeft
+            
+            Ibeam: IBeam
+            ResizeEw: ResizeEW
+            ResizeNs: ResizeNS
+            ResizeNwse: ResizeNWSE
+            ResizeNesw: ResizeNESW
+            Hresize: HorizontalResize
+            Vresize: VerticalResize
         ranges:
             - from: GLFW_KEY_UNKNOWN
               to: GLFW_KEY_LAST
               name: GlfwKey
+              prefix: Key
+            - from: GLFW_MOD_SHIFT
+              to: GLFW_MOD_NUM_LOCK
+              name: GlfwKeyMod
+              prefix: Mod
+
+            - from: GLFW_JOYSTICK_1
+              to: GLFW_JOYSTICK_LAST
+              name: GlfwJoystickId
+
+            - from: GLFW_HAT_CENTERED
+              to: GLFW_HAT_LEFT_DOWN
+              name: GlfwJoystickHat
+              prefix: Hat
+
+            - from: GLFW_MOUSE_BUTTON_1
+              to: GLFW_MOUSE_BUTTON_MIDDLE
+              name: GlfwMouseButton
+              prefix: Mouse
+
+            - from: GLFW_GAMEPAD_BUTTON_A
+              to: GLFW_GAMEPAD_BUTTON_TRIANGLE
+              name: GlfwGamepadButton
+              prefix: GamepadButton
+
+            - from: GLFW_GAMEPAD_AXIS_LEFT_X
+              to: GLFW_GAMEPAD_AXIS_LAST
+              name: GlfwGamepadAxis
+              prefix: GamepadAxis
+
+            - from: GLFW_NO_ERROR
+              to: GLFW_PLATFORM_UNAVAILABLE
+              name: GlfwError
+
+            - from: GLFW_ARROW_CURSOR
+              to: GLFW_HAND_CURSOR
+              name: GlfwCursorForm
+              postfix: Cursor
+
+            - from: GLFW_ANY_PLATFORM
+              to: GLFW_PLATFORM_NULL
+              name: GlfwPlatform
+
+

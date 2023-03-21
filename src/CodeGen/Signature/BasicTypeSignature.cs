@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CodeGen.Signature;
+﻿namespace CodeGen.Signature;
 
 public abstract class BasicTypeSignature : UnitSignature
 {
@@ -12,17 +10,15 @@ public abstract class BasicTypeSignature : UnitSignature
 	public abstract string TypeKeyword { get; }
 }
 
-public sealed class EnumSignature : BasicTypeSignature
+public sealed class StructSignature : NonEnumSignature
 {
 	public override BasicTypeSignature? Parent => null;
 	public override bool IsStatic => false;
-	public override string TypeKeyword => "enum";
-	public List<EnumValueSignature> Entries { get; } = new();
-}
-
-public sealed class StructSignature : BasicTypeSignature
-{
-	public override BasicTypeSignature? Parent => throw new System.NotImplementedException();
-	public override bool IsStatic { get; }
 	public override string TypeKeyword => "struct";
+}
+public sealed class StaticClassSignature : NonEnumSignature
+{
+	public override BasicTypeSignature? Parent => null;
+	public override bool IsStatic => true;
+	public override string TypeKeyword => "class";
 }

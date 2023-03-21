@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="NiTiS.Collections" Version="2.2.0" />
     <PackageReference Include="YamlDotNet" Version="13.0.2" />
-    <PackageReference Include="NiTiS.Core" Version="3.*" />
+    <PackageReference Include="NiTiS.Core" Version="3.4" />
   </ItemGroup>
 
 </Project>
