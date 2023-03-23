@@ -35,6 +35,11 @@ jobs:
     runs-on: ${{ matrix.env.os }}
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules, configure git
+        run: |
+          git -c submodule.third_party/git-hooks.update=none submodule update --init --recursive
+          git config --local user.email "actions@users.noreply.github.com"
+          git config --local user.name "actions" 
 
       - name: Build
         run: |
