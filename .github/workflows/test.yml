@@ -1,4 +1,4 @@
-name: Build Test
+name: Test Build
 
 on:
   push:
@@ -23,13 +23,13 @@ jobs:
         env:
           - os: ubuntu-latest
             name: Linux
-            nuke_invoke: ./build.sh
+            nuke_invoke: ./build.sh Compile
           - os: windows-latest
             name: Windows
-            nuke_invoke: ./build.cmd
+            nuke_invoke: ./build.cmd Compile
           - os: macos-latest
             name: Darwin
-            nuke_invoke: ./build.sh
+            nuke_invoke: ./build.sh Compile
     
     name: ${{ matrix.env.name }} Test
     runs-on: ${{ matrix.env.os }}
@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          ${{ matrix.env.nuke }} Compile
+          ${{ matrix.env.nuke_invoke }}
           
       - name: Artifact Pack
         uses: actions/upload-artifact@v2

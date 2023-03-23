@@ -19,17 +19,17 @@ jobs:
         env:
           - os: ubuntu-latest
             name: Linux
-            nuke_invoke: ./build.sh glfw
+            nuke_invoke: ./build.sh GLFW
             extras: |
               sudo apt-get update
               sudo apt-get install -y xorg-dev 
           - os: windows-latest
             name: Windows
-            nuke_invoke: ./build.cmd glfw
+            nuke_invoke: ./build.cmd GLFW
             extras: ""
           - os: macos-latest
             name: Darwin
-            nuke_invoke: ./build.sh glfw
+            nuke_invoke: ./build.sh GLFW
             extras: ""
           
     name: ${{ matrix.env.name }} Glfw Build
