@@ -48,7 +48,7 @@ jobs:
       - name: Artifact Pack
         uses: actions/upload-artifact@v2
         with:
-          name: Artifacts
+          name: Artifacts ${{ matrix.env.name }}
           path: output/compile/**/*.dll
       
       #- name: Nuget Upload
