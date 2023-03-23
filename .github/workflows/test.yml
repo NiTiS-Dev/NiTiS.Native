@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          ${{ matrix.env.nuke }} compile
+          ${{ matrix.env.nuke }} Compile
           
       - name: Artifact Pack
         uses: actions/upload-artifact@v2
