@@ -6,6 +6,8 @@ using Nuke.Common.Utilities.Collections;
 using System.IO;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
+namespace NiTiS.Native.NUKE;
+
 partial class Build
 {
 	Target DeleteBindings => _ => _

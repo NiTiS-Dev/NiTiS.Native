@@ -12,6 +12,8 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
+namespace NiTiS.Native.NUKE;
+
 partial class Build
 {
 	static AbsolutePath GLFWPath => RootDirectory / "build" / "submodules" / "GLFW";

@@ -78,6 +78,9 @@
               "GenerateBindings",
               "GLFW",
               "Pack",
+              "PushGithub",
+              "PushNuGet",
+              "PushToAll",
               "Restore"
             ]
           }
@@ -98,6 +101,9 @@
               "GenerateBindings",
               "GLFW",
               "Pack",
+              "PushGithub",
+              "PushNuGet",
+              "PushToAll",
               "Restore"
             ]
           }

@@ -50,19 +50,3 @@ jobs:
         with:
           name: Artifacts ${{ matrix.env.name }}
           path: output/compile/**/NiTiS.*.dll
-      
-      #- name: Nuget Upload
-      #  if: (github.event_name == 'push')
-      #  run: |
-      #    cd .pack/
-      #    dotnet nuget push ${{ matrix.project }}/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN} --skip-duplicate
-      #  env:
-      #    NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}   
-      
-      #- name: Github Upload
-      #  if: (github.event_name == 'push')
-      #  run: |
-      #    cd .pack/
-      #    dotnet nuget push ${{ matrix.project }}/*.nupkg --source https://nuget.pkg.github.com/NiTiS-Dev/index.json --api-key ${GITHUB_TOKEN} --skip-duplicate
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

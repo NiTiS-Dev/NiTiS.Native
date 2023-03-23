@@ -1,6 +1,8 @@
 using Nuke.Common.Tooling;
 using System.ComponentModel;
 
+namespace NiTiS.Native.NUKE;
+
 [TypeConverter(typeof(TypeConverter<Configuration>))]
 public class Configuration : Enumeration
 {

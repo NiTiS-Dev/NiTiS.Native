@@ -11,6 +11,8 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
+namespace NiTiS.Native.NUKE;
+
 partial class Build
 {
 
