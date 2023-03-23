@@ -43,8 +43,8 @@ partial class Build : NukeBuild
 			proc.AssertZeroExitCode();
 		});
 	Target Pack => _ => _
-		.DependsOn(Restore)
-		.After(Clean, GenerateBindings)
+		.DependsOn(Restore, GenerateBindings)
+		.After(Clean)
 		.Produces("output/packages/*.nupkg")
 		.Executes(() =>
 		{

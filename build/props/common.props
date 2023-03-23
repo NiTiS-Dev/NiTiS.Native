@@ -13,8 +13,8 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageTags>$(PackageTags);C#;.NET</PackageTags>
 		<PackageTags Condition="$(NativeAPI)!=''">$(PackageTags);Windows;Linux;Bindings;Wrapper;Native</PackageTags>
-		<Version Condition="$(Version)==''">0.0.3</Version>
-		<PackageVersion Condition="$(VersionSuffix)!=''">$(Version)-preview</PackageVersion>
+		<Version Condition="$(Version)==''">0.0.4</Version>
+		<PackageVersion Condition="$(VersionSuffix)==''">$(Version)</PackageVersion>
 		<IncludeContentInPack Condition="$(NativeAPI)!=''">true</IncludeContentInPack>
 		<GenerateDocumentationFile Condition="$(NativeAPI)!=''">false</GenerateDocumentationFile>
 
