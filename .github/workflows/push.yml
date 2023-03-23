@@ -28,6 +28,9 @@ jobs:
           git config --local user.name "actions" 
 
       - name: Push
+        env:
+          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./build.sh PushToAll
       
