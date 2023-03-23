@@ -1,5 +1,9 @@
 using Nuke.Common;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotNet;
+using static Nuke.Common.Tooling.ProcessTasks;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 partial class Build : NukeBuild
 {
@@ -25,7 +29,29 @@ partial class Build : NukeBuild
 	Target Compile => _ => _
 		.DependsOn(Restore)
 		.DependsOn(GenerateBindings)
+		.Produces("output/compile/**/*.dll")
 		.Executes(() =>
 		{
+			DotNetBuildSettings setting = new();
+			setting.SetProjectFile(Solution);
+			setting.EnableNoRestore();
+			setting.SetConfiguration(Configuration);
+			setting.SetOutputDirectory(Solution.Directory / "output" / "compile");
+
+			using IProcess proc = StartProcess(setting);
+			proc.AssertZeroExitCode();
+		});
+	Target Pack => _ => _
+		.DependsOn(Restore)
+		.After(Clean, GenerateBindings)
+		.Produces("output/packages/*.nupkg")
+		.Executes(() =>
+		{
+			DotNetPackSettings setting = new();
+			setting.EnableNoRestore();
+			setting.SetConfiguration(Configuration);
+
+			using IProcess proc = StartProcess(setting);
+			proc.AssertZeroExitCode();
 		});
 }

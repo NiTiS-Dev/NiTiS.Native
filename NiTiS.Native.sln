@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{87514833
 		build\props\common.props = build\props\common.props
 		.github\workflows\glfw.yml = .github\workflows\glfw.yml
 		build\submodules\GLFW\include\GLFW\glfw3.h = build\submodules\GLFW\include\GLFW\glfw3.h
+		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.GLFW", "src\NiTiS.Native.GLFW\NiTiS.Native.GLFW.csproj", "{B6AA71C3-636A-4C49-910C-DA8AF03875AC}"

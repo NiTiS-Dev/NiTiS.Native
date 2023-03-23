@@ -13,7 +13,3 @@ public sealed class FunctionSignature : UnitSignature
 	public override string ToString()
 		=> ReturnType + Name + Arguments.EnumerableToString(start: "(", end: ")");
 }
-public sealed class ArgumentSignature : UnitSignature
-{
-	public BasicTypeSignature Type { get; set; }
-}

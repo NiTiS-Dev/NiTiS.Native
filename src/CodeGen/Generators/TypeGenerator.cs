@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using NiTiS.Core.Extensions;
+using System.Text;
 
 namespace CodeGen.Generators;
 
@@ -142,15 +143,17 @@ public sealed class TypeGenerator
 	}
 	private void GenerateType(NonEnumSignature sign, CodeWriter cw)
 	{
+		bool functionsExists = false;
+
+		// Delegates
 		foreach (FunctionSignature fun in sign.Functions)
 		{
-
 			cw.PushHide();
 			cw.PushCompilerGenerated();
 			cw.WriteIndent();
 			cw.Write("public ");
 			cw.Write(sign.IsStatic ? "static " : string.Empty);
-			cw.Write("unsafe delegate* ");
+			cw.Write("unsafe readonly delegate* ");
 			if (!fun.Convention.IsImplicit)
 			{
 				cw.Write($"unmanaged[{fun.Convention.Name}] ");
@@ -171,8 +174,97 @@ public sealed class TypeGenerator
 			cw.WriteLine();
 			cw.WriteLine();
 		}
-	}
+		// Methods
+		foreach (FunctionSignature fun in sign.Functions)
+		{
+			cw.PushCompilerGenerated();
+			cw.PushInline();
+			cw.WriteIndent();
+			cw.Write("public ");
+			cw.Write(sign.IsStatic ? "static unsafe " : string.Empty);
+			cw.Write(fun.ReturnType.Name);
+			cw.Write(' ');
+			if (fun.Name?.HasPrefix("glfw") ?? false)
+				cw.Write(fun.Name[4..]);
+			else
+				cw.Write(fun?.Name ?? "__UNNAMED__");
 
+			int i = 0;
+			cw.Write(fun.Arguments.EnumerableToString((obj) =>
+			{
+				i++;
+				functionsExists = true;
+				if (obj is ArgumentSignature argSign)
+				{
+					string? argName = null;
+
+					argName = argSign.NativeName;
+					if (argName is "string")
+						argName = "str";
+
+					argName ??= $"arg{i}";
+
+					return $"{argSign.Type.Name} {argName}";
+				}
+
+				return "???";
+			}, start: "(", end: ")"));
+			i = 0;
+			cw.WriteLine();
+			cw.BeginBlock();
+			{
+				cw.WriteLine($"{(fun.ReturnType.Name != "void" ? "return" : string.Empty)} @__{fun.Name}{fun.Arguments.EnumerableToString((obj) =>
+				{
+					i++;
+					if (obj is ArgumentSignature argSign)
+					{
+						if (argSign.NativeName is "string")
+							return "str";
+
+						return argSign.NativeName ?? $"arg{i}";
+					}
+					else
+					{
+						return $"arg{i}";
+					}
+				}, start: "(", end: ")")};");
+			}
+			cw.EndBlock();
+		}
+		// Static ctor
+		if (functionsExists)
+		{
+			cw.WriteLine($"static unsafe {sign.Name}()");
+			cw.BeginBlock();
+			{
+				cw.WriteLine("global::NiTiS.Native.Loaders.NativeLibraryLoader loader;");
+				cw.WriteLine("global::NiTiS.Native.NativeLibraryReference lib;");
+				cw.WriteLine("loader = global::NiTiS.Native.Loaders.NativeLibraryLoader.DefaultPlatformLoader;");
+				cw.WriteLine("string libname = LibName();");
+				cw.WriteLine("lib = loader.LoadLibrary(libname);");
+
+				StringBuilder castName = new();
+				foreach (FunctionSignature fun in sign.Functions)
+				{
+					castName.Append("delegate* <");
+					{
+						foreach (ArgumentSignature arg in fun.Arguments)
+						{
+							castName.Append(arg.Type.Name);
+							castName.Append(", ");
+						}
+
+						castName.Append(fun.ReturnType.Name);
+					}
+					castName.Append(">");
+
+					cw.WriteLine($"@__{fun.Name} = ({castName})loader.GetProcAddress(lib, \"{fun.Name}\");");
+					castName.Clear();
+				}
+			}
+			cw.EndBlock();
+		}
+	}
 	private string ConstCaseToPascalCase(string origin)
 	{
 		if (origin.Any(static c => char.IsLower(c)))

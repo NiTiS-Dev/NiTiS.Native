@@ -17,9 +17,34 @@ GLFW:
             GLFWgammaramp: GlfwGammaRamp
             GLFWimage: GlfwImage
             GLFWvidmode: GlfwVideoMode
+            GLFWgamepadstate: GlfwGamepadState
             GLFWallocator: GlfwAllocator
             GLFWglproc: nint
             GLFWvkproc: nint
+            GLFWerrorfun: delegate* <int /* error_code */, CString /* description */, void>
+            GLFWmonitorfun: delegate* <GlfwMonitor* /* monitor */, int /* event */, void>
+            GLFWwindowposfun: delegate* <GlfwWindow* /* window */, int /* xpos */, int /* ypos */, void>
+            GLFWwindowsizefun: delegate* <GlfwWindow* /* window */, int /* width */, int /* height */, void>
+            GLFWwindowclosefun: delegate* <GlfwWindow* /* window */, void>
+            GLFWwindowrefreshfun: delegate* <GlfwWindow* /* window */, void>
+            GLFWwindowfocusfun: delegate* <GlfwWindow* /* window */, int /* focused */, void>
+            GLFWwindowiconifyfun: delegate* <GlfwWindow* /* window */, int /* iconified */, void>
+            GLFWwindowmaximizefun: delegate* <GlfwWindow* /* window */, int /* maximized */, void>
+            GLFWframebuffersizefun: delegate* <GlfwWindow* /* window */, int /* width */, int /* height */, void>
+            GLFWwindowcontentscalefun: delegate* <GlfwWindow* /* window */, float /* xscale */, float /* yscale */, void>
+            GLFWjoystickfun: delegate* <int /* jid */, int /* event */, void>
+            GLFWkeyfun: delegate* <GlfwWindow* /* window */, int /* key */, int /* scancode */, int /* action */, int /* mod */, void>
+            GLFWcharfun: delegate* <GlfwWindow* /* window */, uint /* codepoint */, void>
+            GLFWcharmodsfun: delegate* <GlfwWindow* /* window */, uint /* codepoint */, int /* mods */, void>
+            GLFWmousebuttonfun: delegate* <GlfwWindow* /* window */, int /* button */, int /* action */, int /* mods */, void>
+            GLFWcursorposfun: delegate* <GlfwWindow* /* window */, double /* xpos */, double /* ypos */, void>
+            GLFWcursorenterfun: delegate* <GlfwWindow /*window */, int /* entered */, void>
+            GLFWscrollfun: delegate* <GlfwWindow* /* window */, double /* xoffset */, double /* yoffset */, void>
+            GLFWdropfun: delegate* <GlfwWindow* /* window */, int /* path_count */, CString* /* paths */, void>
+            PFN_vkGetInstanceProcAddr: delegate* unmanaged[Stdcall]<nint /* instance */, CString /* pName */, delegate* unmanaged[Stdcall]<void>>
+            VkInstance: nint
+            VkPhysicalDevice: nint
+
 
         rename:
             0: Number0
@@ -50,6 +75,9 @@ GLFW:
               to: GLFW_KEY_LAST
               name: GlfwKey
               prefix: Key
+            - from: GLFW_RELEASE
+              to: GLFW_REPEAT
+              name: GlfwAction
             - from: GLFW_MOD_SHIFT
               to: GLFW_MOD_NUM_LOCK
               name: GlfwKeyMod

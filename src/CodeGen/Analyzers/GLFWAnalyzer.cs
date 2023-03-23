@@ -184,6 +184,11 @@ public sealed partial class GLFWAnalyzer : Analyzer
 	}
 	private unsafe BasicTypeSignature GetType(CodeGenTask task, string typeName, bool unsigned, int pointers)
 	{
+		if (task.Map?.TypeMap?.TryGetValue(typeName, out string? name) ?? false) // typemap check
+		{
+			return new StaticClassSignature() { Name = name + '*'.Repeat(pointers) };
+		}
+
 		if (typeName is "void")
 		{
 			if (pointers is 1)
@@ -196,16 +201,17 @@ public sealed partial class GLFWAnalyzer : Analyzer
 			return StdTypes.NUInt;
 		}
 
-		BasicTypeSignature selectedType = null;
+		BasicTypeSignature? selectedType = null;
 
 		switch (typeName)
 		{
 			case "int":
+				selectedType = unsigned ? StdTypes.UInt : StdTypes.Int;
+				break;
 			case "int32_t":
 				selectedType = StdTypes.Int;
 				break;
 
-			case "uint":
 			case "uint32_t":
 				selectedType = StdTypes.UInt;
 				break;
@@ -238,19 +244,15 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				break;
 			case "uint64_t":
 				selectedType = StdTypes.ULong;
-				break;
+                break;
 			case "int64_t":
 				selectedType = StdTypes.Long;
 				break;
 		}
 
-		if (task.Map?.TypeMap.TryGetValue(typeName, out string? name) ?? false) {
-			return new StaticClassSignature() { Name = name + '*'.Repeat(pointers) };
-		}
-
-		if (selectedType is null)
+        if (selectedType is null)
 			return new StaticClassSignature() { Name = "_" + typeName + "_" + '*'.Repeat(pointers) };
 		else
-			return new StaticClassSignature() { Name = typeName + '*'.Repeat(pointers) };
+			return new StaticClassSignature() { Name = selectedType.Name + '*'.Repeat(pointers) };
 	}
 }

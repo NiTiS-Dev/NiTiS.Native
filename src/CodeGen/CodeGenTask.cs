@@ -78,9 +78,9 @@ public sealed class CodeGenAnalyzer
 public sealed class CodeGenMap
 {
 	[YamlMember(Alias = "typemap")]
-	public Dictionary<string, string> TypeMap { get; set; } = new(0);
+	public Dictionary<string, string>? TypeMap { get; set; }
 	[YamlMember(Alias = "rename")]
-	public Dictionary<string, string> Rename { get; set; } = new(0);
+	public Dictionary<string, string>? Rename { get; set; }
 	[YamlMember(Alias = "ranges")]
 	public CodeGenRange[] Ranges { get; set; } = Array.Empty<CodeGenRange>();
 }

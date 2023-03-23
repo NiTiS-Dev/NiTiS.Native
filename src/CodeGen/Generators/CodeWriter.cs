@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CodeGen.Builders;
@@ -8,9 +9,11 @@ public sealed class CodeWriter : StringWriter
 {
 	private static readonly string CompilerGenerated = "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]";
 	private static readonly string BrowsableHide = "[global::System.ComponentModel.BrowsableAttribute(false)]";
+	private static readonly string Inline = "[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]";
 	private static readonly string Tabulatum = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"; // 32 tabulations
 	public int Depth { get; set; } = 0;
 
+	
 	public void BeginBlock()
 	{
 		WriteLine("{");
@@ -25,6 +28,9 @@ public sealed class CodeWriter : StringWriter
 		=> WriteLine(CompilerGenerated);
 	public void PushHide()
 		=> WriteLine(BrowsableHide);
+	public void PushInline()
+		=> WriteLine(Inline);
+
 	public override void WriteLine(string? value)
 	{
 		WriteIndent();

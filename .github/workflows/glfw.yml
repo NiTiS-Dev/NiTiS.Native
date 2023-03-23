@@ -12,7 +12,7 @@ on:
       - "build/Build+Native+GLFW.cs"
 
 jobs:
-  Build:
+  glfw-build:
     strategy: 
       fail-fast: false
       matrix:
@@ -32,7 +32,7 @@ jobs:
             nuke_invoke: ./build.sh glfw
             extras: ""
           
-    name: ${{ matrix.env.name }} Build
+    name: ${{ matrix.env.name }} Glfw Build
     runs-on: ${{ matrix.env.os }}
     steps:
       - uses: actions/checkout@v2

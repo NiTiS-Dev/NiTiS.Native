@@ -2,15 +2,24 @@
 	<PropertyGroup>
 		<FrameworkPack>Default</FrameworkPack>
 		<Nullable>enable</Nullable>
-
-		<Version>0.0.2</Version>
-		<VersionSuffix>preview</VersionSuffix>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>NiTiS.Native.GLFW</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NiTiS.Core" Version="3.4.*" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
 	</ItemGroup>
 
 	<Import Project="$(SolutionDir)/build/props/common.props" />

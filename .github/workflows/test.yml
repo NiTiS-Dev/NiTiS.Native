@@ -1,0 +1,63 @@
+name: test
+
+on:
+  push:
+    branches-ignore:
+      - "ci/*"
+      - "feature/*"
+      - "dev"
+    paths:
+    - '**.cs'
+    - '**.csproj'
+    - '.github/workflows/build.yml'
+
+  pull_request:
+  
+  workflow_dispatch:
+  
+jobs:
+  test:
+    strategy: 
+      fail-fast: false
+      matrix:
+        env:
+          - os: ubuntu-latest
+            name: Linux
+            nuke_invoke: ./build.sh
+          - os: windows-latest
+            name: Windows
+            nuke_invoke: ./build.cmd
+          - os: macos-latest
+            name: Darwin
+            nuke_invoke: ./build.sh
+    
+    name: ${{ matrix.env.name }} Test
+    runs-on: ${{ matrix.env.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          ${{ matrix.env.nuke }} compile
+          
+      - name: Artifact Pack
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: output/compile/**/*.dll
+      
+      #- name: Nuget Upload
+      #  if: (github.event_name == 'push')
+      #  run: |
+      #    cd .pack/
+      #    dotnet nuget push ${{ matrix.project }}/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN} --skip-duplicate
+      #  env:
+      #    NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}   
+      
+      #- name: Github Upload
+      #  if: (github.event_name == 'push')
+      #  run: |
+      #    cd .pack/
+      #    dotnet nuget push ${{ matrix.project }}/*.nupkg --source https://nuget.pkg.github.com/NiTiS-Dev/index.json --api-key ${GITHUB_TOKEN} --skip-duplicate
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
