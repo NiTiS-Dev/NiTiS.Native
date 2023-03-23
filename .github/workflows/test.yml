@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts ${{ matrix.env.name }}
-          path: output/compile/**/*.dll
+          path: output/compile/**/NiTiS.*.dll
       
       #- name: Nuget Upload
       #  if: (github.event_name == 'push')
