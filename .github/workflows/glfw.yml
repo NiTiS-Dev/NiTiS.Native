@@ -1,4 +1,4 @@
-name: GLFW
+name: Build Natives GLFW
 on:
   workflow_dispatch:
 

@@ -1,4 +1,4 @@
-name: test
+name: Build Test
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     paths:
     - '**.cs'
     - '**.csproj'
-    - '.github/workflows/build.yml'
+    - '.github/workflows/test.yml'
 
   pull_request:
   
