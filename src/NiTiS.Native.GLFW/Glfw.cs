@@ -6,7 +6,7 @@ namespace NiTiS.Native.GLFW;
 /// <summary>
 /// Access 
 /// </summary>
-public static partial class Glfw
+public static unsafe partial class Glfw
 {
 	/// <summary>
 	/// Represent <see langword="true"/> value

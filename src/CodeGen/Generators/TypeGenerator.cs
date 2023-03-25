@@ -149,6 +149,7 @@ public sealed class TypeGenerator
 		foreach (FunctionSignature fun in sign.Functions)
 		{
 			cw.PushHide();
+			cw.PushEditorHide();
 			cw.PushCompilerGenerated();
 			cw.WriteIndent();
 			cw.Write("public ");
