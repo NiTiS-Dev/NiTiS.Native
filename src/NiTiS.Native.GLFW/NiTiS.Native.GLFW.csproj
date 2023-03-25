@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<BindingAPI>true</BindingAPI>
+		<Description>The package that provides binding to GLFW API</Description>
+
 		<FrameworkPack>Default</FrameworkPack>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>

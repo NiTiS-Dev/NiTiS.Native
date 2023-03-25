@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<Description>The package including tools for managing unmanaged libraries</Description>
+		<PackageTags></PackageTags>
+
 		<FrameworkPack>Default</FrameworkPack>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
