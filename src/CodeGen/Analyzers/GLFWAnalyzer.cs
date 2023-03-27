@@ -217,14 +217,11 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				break;
 
 			case "char":
-				if (pointers >= 1)
+				selectedType = unsigned ? StdTypes.Byte : StdTypes.SByte;
+				if (!unsigned && pointers >= 1)
 				{
 					selectedType = StdTypes.CString;
 					pointers--;
-				}
-				else
-				{
-					selectedType = unsigned ? StdTypes.Byte : StdTypes.SByte;
 				}
 				break;
 			case "short":
