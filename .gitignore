@@ -363,6 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # gen.cs
-**/*.gen.cs
+# **/*.gen.cs # Need to see changes in code!
 
 output/

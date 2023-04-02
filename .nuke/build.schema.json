@@ -81,7 +81,8 @@
               "PushGithub",
               "PushNuGet",
               "PushToAll",
-              "Restore"
+              "Restore",
+              "SDL"
             ]
           }
         },
@@ -104,7 +105,8 @@
               "PushGithub",
               "PushNuGet",
               "PushToAll",
-              "Restore"
+              "Restore",
+              "SDL"
             ]
           }
         },
