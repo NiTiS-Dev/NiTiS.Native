@@ -13,7 +13,7 @@ on:
 
 jobs:
   glfw-build:
-    strategy: 
+    strategy:
       fail-fast: false
       matrix:
         env:
@@ -22,7 +22,7 @@ jobs:
             nuke_invoke: ./build.sh GLFW
             extras: |
               sudo apt-get update
-              sudo apt-get install -y xorg-dev 
+              sudo apt-get install -y xorg-dev
           - os: windows-latest
             name: Windows
             nuke_invoke: ./build.cmd GLFW
@@ -31,7 +31,7 @@ jobs:
             name: Darwin
             nuke_invoke: ./build.sh GLFW
             extras: ""
-          
+
     name: ${{ matrix.env.name }} Glfw Build
     runs-on: ${{ matrix.env.os }}
     steps:
@@ -42,7 +42,7 @@ jobs:
         run: |
           git -c submodule.third_party/git-hooks.update=none submodule update --init --recursive
           git config --local user.email "actions@users.noreply.github.com"
-          git config --local user.name "actions" 
+          git config --local user.name "actions"
       - name: Extra prerequisites
         run: |
           echo running extras
