@@ -20,10 +20,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native", "src\NiTiS.N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{87514833-31E8-47BA-9664-ED83BA6896FA}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		build\props\common.props = build\props\common.props
 		.github\workflows\glfw.yml = .github\workflows\glfw.yml
 		build\submodules\GLFW\include\GLFW\glfw3.h = build\submodules\GLFW\include\GLFW\glfw3.h
 		.github\workflows\push.yml = .github\workflows\push.yml
+		.github\workflows\sdl.yml = .github\workflows\sdl.yml
 		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
