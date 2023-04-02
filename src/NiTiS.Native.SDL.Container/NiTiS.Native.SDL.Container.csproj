@@ -16,8 +16,8 @@
 		<Content Include="build\$(PackageId).props" PackagePath="build/net46/$(PackageId).props" />
 		<Content Include="build\$(PackageId).props" PackagePath="build/net5.0/$(PackageId).props" />
 
-		<Content Include="runtimes/linux-x64/libSDL3-3.0.so" PackagePath="runtimes/linux-x64/libSDL3-3.0.so" />
-		<Content Include="runtimes/osx-x64/libSDL3-3.0.dylib" PackagePath="runtimes/osx-x64/libSDL3-3.0.dylib" />
+		<Content Include="runtimes/linux-x64/libSDL3.so" PackagePath="runtimes/linux-x64/libSDL3.so" />
+		<Content Include="runtimes/osx-x64/libSDL3.dylib" PackagePath="runtimes/osx-x64/libSDL3.dylib" />
 		<Content Include="runtimes/win-x64/SDL3.dll" PackagePath="runtimes/win-x64/native/SDL3.dll" />
 		<Content Include="runtimes/win-x86/SDL3.dll" PackagePath="runtimes/win-x86/native/SDL3.dll" />
 	</ItemGroup>
