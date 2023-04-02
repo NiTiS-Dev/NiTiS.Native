@@ -10,8 +10,6 @@ on:
     - '**.cs'
     - '**.csproj'
     - '.github/workflows/test.yml'
-
-  pull_request:
   
   workflow_dispatch:
   
