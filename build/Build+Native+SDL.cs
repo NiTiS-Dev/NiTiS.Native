@@ -47,7 +47,7 @@ partial class Build
 					InheritedShell(build, @out)
 					.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("Release/SDL*.dll"), GLFWRuntimes / ProcKind.WinX32);
+					CopyAll(@out.GlobFiles("Release/SDL*.dll"), SDLRuntimes / ProcKind.WinX32);
 
 					//EnsureCleanDirectory(@out);
 
@@ -61,28 +61,28 @@ partial class Build
 				}
 				else if (OperatingSystem.IsLinux())
 				{
-					InheritedShell($"{prepare} -DCMAKE_SYSTEM_PROCESSOR=x86_64", GLFWPath)
+					InheritedShell($"{prepare} -DCMAKE_SYSTEM_PROCESSOR=x86_64", @out)
 						.AssertZeroExitCode();
-					InheritedShell(build, GLFWPath)
+					InheritedShell(build, @out)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libSDL*.so"), GLFWRuntimes / ProcKind.LinuxX64);
+					CopyAll(@out.GlobFiles("src/libSDL*.so"), SDLRuntimes / ProcKind.LinuxX64);
 				}
 				else if (OperatingSystem.IsMacOS())
 				{
-					InheritedShell($"{prepare} -DCMAKE_OSX_ARCHITECTURES=x86_64", GLFWPath)
+					InheritedShell($"{prepare} -DCMAKE_OSX_ARCHITECTURES=x86_64", @out)
 						.AssertZeroExitCode();
-					InheritedShell(build, GLFWPath)
+					InheritedShell(build, @out)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libSDL*.dylib"), GLFWRuntimes / ProcKind.osxX64);
+					CopyAll(@out.GlobFiles("src/libSDL*.dylib"), SDLRuntimes / ProcKind.osxX64);
 
 					EnsureCleanDirectory(@out);
 
-					InheritedShell($"{prepare} -DCMAKE_OSX_ARCHITECTURES=arm64", GLFWPath)
+					InheritedShell($"{prepare} -DCMAKE_OSX_ARCHITECTURES=arm64", @out)
 						.AssertZeroExitCode();
-					InheritedShell(build, GLFWPath)
+					InheritedShell(build, @out)
 						.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("src/libSDL.3.dylib"), GLFWRuntimes / ProcKind.osxARM64);
+					CopyAll(@out.GlobFiles("src/libSDL*.dylib"), SDLRuntimes / ProcKind.osxARM64);
 				}
 
 				PrUpdatedNativeBinary("GLFW");
