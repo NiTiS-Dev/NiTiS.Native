@@ -1,4 +1,4 @@
-name: Build Natives GLFW
+name: Build Natives SDL
 on:
   workflow_dispatch:
 
@@ -8,8 +8,8 @@ on:
       - "feature/*"
       - "dev"
     paths:
-      - "build/submodules/GLFW"
-      - "build/Build+Native+GLFW.cs"
+      - "build/submodules/SDL"
+      - "build/Build+Native+SDL.cs"
 
 jobs:
   glfw-build:
@@ -19,20 +19,20 @@ jobs:
         env:
           - os: ubuntu-latest
             name: Linux
-            nuke_invoke: ./build.sh GLFW
+            nuke_invoke: ./build.sh SDL
             extras: |
               sudo apt-get update
               sudo apt-get install -y xorg-dev 
           - os: windows-latest
             name: Windows
-            nuke_invoke: ./build.cmd GLFW
+            nuke_invoke: ./build.cmd SDL
             extras: ""
           - os: macos-latest
             name: Darwin
-            nuke_invoke: ./build.sh GLFW
+            nuke_invoke: ./build.sh SDL
             extras: ""
           
-    name: ${{ matrix.env.name }} Glfw Build
+    name: ${{ matrix.env.name }} SDL Build
     runs-on: ${{ matrix.env.os }}
     steps:
       - uses: actions/checkout@v2
@@ -47,11 +47,11 @@ jobs:
         run: |
           echo running extras
           ${{ matrix.env.extras }}
-      - name: Setup
+      - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.201
-      - name: Build GLFW
+      - name: Build SDL
         run: ${{ matrix.env.nuke_invoke }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
