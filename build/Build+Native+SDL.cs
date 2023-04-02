@@ -65,7 +65,7 @@ partial class Build
 						.AssertZeroExitCode();
 					InheritedShell(build, @out)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libSDL*.so"), SDLRuntimes / ProcKind.LinuxX64);
+					CopyAll(@out.GlobFiles("**/libSDL*.so"), SDLRuntimes / ProcKind.LinuxX64);
 				}
 				else if (OperatingSystem.IsMacOS())
 				{
@@ -73,7 +73,7 @@ partial class Build
 						.AssertZeroExitCode();
 					InheritedShell(build, @out)
 						.AssertZeroExitCode();
-					CopyAll(@out.GlobFiles("src/libSDL*.dylib"), SDLRuntimes / ProcKind.osxX64);
+					CopyAll(@out.GlobFiles("**/libSDL*.dylib"), SDLRuntimes / ProcKind.osxX64);
 
 					EnsureCleanDirectory(@out);
 
@@ -82,10 +82,10 @@ partial class Build
 					InheritedShell(build, @out)
 						.AssertZeroExitCode();
 
-					CopyAll(@out.GlobFiles("src/libSDL*.dylib"), SDLRuntimes / ProcKind.osxARM64);
+					CopyAll(@out.GlobFiles("**/libSDL*.dylib"), SDLRuntimes / ProcKind.osxARM64);
 				}
 
-				PrUpdatedNativeBinary("GLFW");
+				PrUpdatedNativeBinary("SDL");
 			}
 		);
 }
