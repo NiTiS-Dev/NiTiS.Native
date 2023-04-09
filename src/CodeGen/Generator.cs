@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CodeGen;
 
 public static class Generator
 {
-	private static object console_l = new();
+	private static object consoleLock = new();
+	private static HttpClient? httpClient;
 	public static void Run(Dictionary<string, CodeGenTask> tasks)
 	{
 		bool isParallel = !Environment.GetCommandLineArgs().Contains("--no-parallel");
@@ -39,7 +41,7 @@ public static class Generator
 
 	private static void SafeConsoleWriteLine(string text)
 	{
-		lock (console_l)
+		lock (consoleLock)
 		{
 			Console.WriteLine(text);
 		}
@@ -60,6 +62,20 @@ public static class Generator
 		for (int i = 0; i < task?.IncludeFiles?.Count; i++)
 		{
 			string filePath = task.IncludeFiles[i];
+
+			if (Uri.TryCreate(filePath, new UriCreationOptions(), out Uri? result))
+			{
+				httpClient ??= new();
+				string tempFile = Path.GetTempFileName();
+
+				using Stream contentStream = httpClient.GetStreamAsync(result).Result;
+				using FileStream fs = File.OpenWrite(tempFile);
+				contentStream.CopyTo(fs);
+
+				filePath = tempFile;
+				task.IncludeFiles[i] = tempFile;
+			}
+
 			analyzer.Analyze(task, File.ReadAllText(filePath), sign);
 
 			SafeConsoleWriteLine($"Analyzed file {taskName}::{Path.GetFileName(filePath)}");

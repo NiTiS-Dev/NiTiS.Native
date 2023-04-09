@@ -1,3 +1,14 @@
+OpenGL:
+    base-namespace: NiTiS.Native.OpenGL
+    include:
+    - "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml"
+    analyzer:
+        name: GLAnalyzer
+
+    output:
+        target-directory: src/NiTiS.Native.OpenGL/
+        main-class: NiTiS.Native.OpenGL:GL
+
 GLFW:
     base-namespace: NiTiS.Native.GLFW
     include:
@@ -45,7 +56,6 @@ GLFW:
             VkInstance: nint
             VkPhysicalDevice: nint
 
-
         rename:
             0: Number0
             1: Number1
@@ -70,6 +80,7 @@ GLFW:
             ResizeNesw: ResizeNESW
             Hresize: HorizontalResize
             Vresize: VerticalResize
+
         ranges:
             - from: GLFW_KEY_UNKNOWN
               to: GLFW_KEY_LAST
