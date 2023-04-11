@@ -63,7 +63,7 @@ public static class Generator
 		{
 			string filePath = task.IncludeFiles[i];
 
-			if (Uri.TryCreate(filePath, new UriCreationOptions(), out Uri? result))
+			if (Uri.TryCreate(filePath, new UriCreationOptions(), out Uri? result) && !result.IsFile)
 			{
 				httpClient ??= new();
 				string tempFile = Path.GetTempFileName();
@@ -74,6 +74,8 @@ public static class Generator
 
 				filePath = tempFile;
 				task.IncludeFiles[i] = tempFile;
+
+				fs.Flush();
 			}
 
 			analyzer.Analyze(task, File.ReadAllText(filePath), sign);

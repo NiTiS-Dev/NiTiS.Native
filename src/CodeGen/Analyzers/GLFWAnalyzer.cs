@@ -92,7 +92,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 						argI++;
 						string? argumentName = null;
 						BasicTypeSignature argument = GetType(task, argType, ref argumentName);
-						Console.WriteLine($">>{newFunc.ReturnType}<< !{functionName}! ({argI}) :{argument.Name}: #{argType}#");
+						//Console.WriteLine($">>{newFunc.ReturnType}<< !{functionName}! ({argI}) :{argument.Name}: #{argType}#");
 						
 						newFunc.Arguments.Add(new ArgumentSignature()
 						{

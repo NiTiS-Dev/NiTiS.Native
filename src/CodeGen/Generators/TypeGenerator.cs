@@ -99,7 +99,10 @@ public sealed class TypeGenerator
 	{
 		using CodeWriter cw = new();
 
-		string fileName = task?.Output?.TargetDirectory is null ? sign.Name + ".gen.cs" : Path.Combine(task.Output.TargetDirectory, sign.Name + ".gen.cs");
+		string fileName = task?.Output?.TargetDirectory is null
+			? Path.Combine(sign.AddictivePath, sign.Name + ".gen.cs")
+			: Path.Combine(task.Output.TargetDirectory, sign.AddictivePath, sign.Name + ".gen.cs");
+
 		bool partial = File.Exists(Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, sign.Name + ".cs"));
 
 		cw.Write($"""
@@ -132,13 +135,17 @@ public sealed class TypeGenerator
 		cw.WriteLine("#pragma warning restore");
 		cw.WriteLine();
 
+		string? dirName = Path.GetDirectoryName(fileName);
+		if (!Directory.Exists(dirName))
+			Directory.CreateDirectory(dirName!);
+
 		File.WriteAllText(fileName, cw.ToString());
 	}
 	private void GenerateEnum(EnumSignature sign, CodeWriter cw)
 	{
 		foreach (EnumValueSignature val in sign.Entries)
 		{
-			cw.WriteLine($"{val.FieldName} =  unchecked((int){val.Value}),");
+			cw.WriteLine($"{val.FieldName} =  unchecked(({sign.Parent.Name}){val.Value}),");
 		}
 	}
 	private void GenerateType(NonEnumSignature sign, CodeWriter cw)
@@ -273,7 +280,11 @@ public sealed class TypeGenerator
 
 		Span<char> buffer = stackalloc char[origin.Length];
 
-		int index = origin.StartsWith("GLFW_") ? 5 : 0;
+		int index
+			= origin.StartsWith("GLFW_") ? 5
+			: origin.StartsWith("GL_") ? 3
+			: 0
+			;
 
 		bool isNewWord = true;
 		int bufferIndex = 0;

@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.GLFW.Container
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{270FA9EA-38D8-43D4-B2D7-6DDC12F31F66}"
 	ProjectSection(SolutionItems) = preProject
+		.filenesting.json = .filenesting.json
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.gitmodules = .gitmodules
@@ -36,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGen", "src\CodeGen\Code
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.SDL.Container", "src\NiTiS.Native.SDL.Container\NiTiS.Native.SDL.Container.csproj", "{B3514021-9EF4-4715-8C5D-BD021DA7246B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiTiS.Native.OpenGL", "src\NiTiS.Native.OpenGL\NiTiS.Native.OpenGL.csproj", "{C5362563-40D3-4551-BBEF-77BFCE95C114}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.OpenGL", "src\NiTiS.Native.OpenGL\NiTiS.Native.OpenGL.csproj", "{C5362563-40D3-4551-BBEF-77BFCE95C114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
