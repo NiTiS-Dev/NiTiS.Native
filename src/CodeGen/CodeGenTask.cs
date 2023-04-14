@@ -20,6 +20,8 @@ public sealed class CodeGenTask
 	public CodeGenAnalyzer? Analyzer { get; set; }
 	[YamlMember(Alias = "map")]
 	public CodeGenMap? Map { get; set; }
+	[YamlMember(Alias = "contextual-api")]
+	public bool ContextualApi { get; set; } = false;
 
 	public string GetMapping(string? name)
 	{

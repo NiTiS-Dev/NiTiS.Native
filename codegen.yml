@@ -3,6 +3,8 @@ OpenGL:
     include:
     # - "C:/!Temp/tmp98F9.tmp"
     - "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml"
+    
+    contextual-api: true
     analyzer:
         name: GLAnalyzer
 
