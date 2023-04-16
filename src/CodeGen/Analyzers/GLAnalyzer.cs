@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -22,7 +23,7 @@ public partial class GLAnalyzer : Analyzer
 
 		if (root is null)
 			throw new Exception("ROOT NOT FOUND!");
-
+		#region Enums
 		// group, (name, value)
 		Dictionary<string, List<(string Name, string Value)>> groupDict = new(512);
 		foreach (XElement xenums in root.Elements("enums"))
@@ -32,7 +33,7 @@ public partial class GLAnalyzer : Analyzer
 			{
 				string val = xenum.Attribute("value")?.Value?.ToString() ?? throw new Exception("Enum has no value!");
 				string name = xenum.Attribute("name")?.Value?.ToString() ?? throw new Exception("Enum has no name!");
-				
+
 				string? group = xenum.Attribute("group")?.Value?.ToString() ?? globalGroup;
 
 				if (group is null)
@@ -43,7 +44,8 @@ public partial class GLAnalyzer : Analyzer
 
 				foreach (string group_ in group.Split(','))
 				{
-					if (!groupDict.TryGetValue(group_, out List<(string Name, string Value)>? value)) {
+					if (!groupDict.TryGetValue(group_, out List<(string Name, string Value)>? value))
+					{
 						value = new List<(string Name, string Value)>(64);
 						groupDict[group_] = value;
 					}
@@ -65,5 +67,62 @@ public partial class GLAnalyzer : Analyzer
 
 			unit.Types.Add(enumSing);
 		}
+
+		#endregion Enums
+
+		#region Kinds
+		List<Kind> intKinds = new(32);
+		foreach (XElement xkinds in root.Elements("kinds"))
+		{
+			foreach (XElement xkind in root.Elements("kind"))
+			{
+				string name, desc;
+				name = xkind.Attribute("name")?.Value?.ToString()!;
+				desc = xkind.Attribute("desc")?.Value?.ToString()!;
+
+				intKinds.Add(new() { Description = desc, Name = name });
+			}
+		}
+		#endregion Kinds
+
+		StaticClassSignature gl = unit.GetTypeOrCreate<StaticClassSignature>(task.Output?.MainClass);
+
+		#region Commands
+
+		foreach (XElement xcommand in root.Element("commands")!.Elements("command"))
+		{
+			XElement proto = xcommand.Element("proto")!;
+			string name = proto.Element("name")!.Value;
+			string retusaType;
+
+			{
+				int nameIndex = proto.Value.IndexOf(name);
+				retusaType = proto.Value.Remove(nameIndex, name.Length);
+			}
+
+			FunctionSignature fun = new()
+			{
+				Name = name,
+				ReturnType = new StaticClassSignature() { Name = retusaType },
+			};
+
+			gl.Functions.Add(fun);
+        }
+
+		#endregion Commands
+	}
+
+	public class Kind : IEquatable<Kind>
+	{
+		public string Name { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+
+		public bool Equals(Kind? other)
+			=> other is not null ? other.Name == this.Name : false;
+		public override bool Equals(object? obj)
+			=> Equals(obj as Kind);
+
+		public override int GetHashCode()
+			=> Name.GetHashCode();
 	}
 }

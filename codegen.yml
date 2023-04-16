@@ -12,6 +12,31 @@ OpenGL:
         target-directory: src/NiTiS.Native.OpenGL/
         main-class: NiTiS.Native.OpenGL:GL
 
+    map:
+        typemap:
+            GLenum: uint
+            GLboolean: byte /* boolean */
+            GLbitfield: uint
+            GLbyte: sbyte
+            GLubyte: byte
+            GLshort: short
+            GLushort: ushort
+            GLint: int
+            GLuint: uint
+            GLclampx: int
+            GLsizei: int
+            GLsize: uint
+            GLfloat: float
+            GLclampf: float
+            GLdouble: double
+            GLclampd: double
+            GLeglClientBufferEXT: nint
+            GLeglImageOESGLeglImageOES: nint
+            GLchar: sbyte
+            GLcharARB: sbyte /* ARB */
+            GLhandleARB: nint # On apple its a integer (add custom structure type in future??)
+
+
 GLFW:
     base-namespace: NiTiS.Native.GLFW
     include:

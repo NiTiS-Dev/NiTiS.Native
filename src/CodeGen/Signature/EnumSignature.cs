@@ -13,5 +13,6 @@ public sealed class EnumSignature : BasicTypeSignature
 	public override BasicTypeSignature Parent => enumSize ?? StdTypes.Int;
 	public override bool IsStatic => false;
 	public override string TypeKeyword => "enum";
+	public bool IsFlags { get; set; } = false;
 	public List<EnumValueSignature> Entries { get; set; } = new();
 }
