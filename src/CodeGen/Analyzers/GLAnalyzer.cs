@@ -1,8 +1,10 @@
 ﻿using CodeGen.Signature;
+using NiTiS.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -94,25 +96,83 @@ public partial class GLAnalyzer : Analyzer
 			XElement proto = xcommand.Element("proto")!;
 			string name = proto.Element("name")!.Value;
 			string retusaType;
-
 			{
 				int nameIndex = proto.Value.IndexOf(name);
 				retusaType = proto.Value.Remove(nameIndex, name.Length);
 			}
 
+			List<ArgumentSignature> args = new();
+			foreach (XElement xarg in xcommand.Elements("param"))
+			{
+				string? kind = xarg.Attribute("kind")?.Value;
+				string type = xarg.Value;
+				string argName = xarg.Element("name")!.Value;
+
+				type = type.Remove(type.LastIndexOf(argName), argName.Length);
+
+				Kind? kkind = intKinds.FirstOrDefault(s => s.Name == kind);
+
+				args.Add(new ArgumentSignature() { Type = GetType(task, type), NativeName = argName switch { "ref" => "reference", "base" => "@base", "params" => "parameters", "event" => "@event", "object" => "obj", "in" => "@in", _ => argName }, Comment = kkind?.Description });
+			}
+
 			FunctionSignature fun = new()
 			{
 				Name = name,
-				ReturnType = new StaticClassSignature() { Name = retusaType },
+				ReturnType = GetType(task, retusaType),
+				Arguments = args
 			};
 
 			gl.Functions.Add(fun);
-        }
+		}
 
 		#endregion Commands
 	}
+	
+	private static BasicTypeSignature GetType(CodeGenTask task, string type)
+	{
+		int pointers = 0;
 
-	public class Kind : IEquatable<Kind>
+		for (int i = 0; i < type.Length; i++)
+		{
+			if (type[i] == '*')
+			{
+				pointers++;
+				type = type.Remove(i, 1);
+			}
+		}
+
+		type = type.RemovePrefix("struct");
+
+		CONST_REMOVE:
+		int constIndex = type.IndexOf("const");
+
+		if (constIndex is not -1)
+		{
+			type = type.Remove(constIndex, 5);
+			goto CONST_REMOVE;
+		}
+			 
+		type = type.Trim();
+
+		if (task.Map?.TypeMap?.TryGetValue(type, out string? mappedType) ?? false)
+		{
+			type = mappedType;
+		} else if (
+			type is "GLchar" && pointers is 1 ||
+			type is "GLubyte" && pointers is 1)
+		{
+			return StdTypes.CString;
+		} else if (
+			type is "_cl_context" && pointers is 1 ||
+			type is "_cl_event" && pointers is 1)
+		{
+			return StdTypes.NInt;
+		}
+
+		return new StaticClassSignature() { Name = type + '*'.Repeat(pointers) };
+	}
+
+	private class Kind : IEquatable<Kind>
 	{
 		public string Name { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;

@@ -32,10 +32,31 @@ OpenGL:
             GLclampd: double
             GLeglClientBufferEXT: nint
             GLeglImageOESGLeglImageOES: nint
+            GLvdpauSurfaceNV: nint
             GLchar: sbyte
             GLcharARB: sbyte /* ARB */
             GLhandleARB: nint # On apple its a integer (add custom structure type in future??)
+            GLhalf: ushort
+            GLhalfARB: ushort
+            GLhalfNV: ushort
+            GLfixed: int
+            GLintptr: nint
+            GLintptrARB: nint
+            GLsizeiptr: nuint
+            GLiptrsize: nuint
+            GLsizeiptrARB: nuint
+            GLint64: long
+            GLint64ARB: long
+            GLint64EXT: long
+            GLuint64: ulong
+            GLuint64EXT: ulong
+            GLsync: GLSync
 
+            GLVULKANPROCNV: delegate *<void>
+            GLDEBUGPROC: delegate *<int /* source */, int /* type */, uint /* id */, int /* severity */, int /* length */, CString /* message */, nint /* userParam */, void>
+            GLDEBUGPROCARB: delegate *<int /* source */, int /* type */, uint /* id */, int /* severity */, int /* length */, CString /* message */, nint /* userParam */, void>
+            GLDEBUGPROCKHR: delegate *<int /* source */, int /* type */, uint /* id */, int /* severity */, int /* length */, CString /* message */, nint /* userParam */, void>
+            GLDEBUGPROCAMD: delegate *<uint /* id */, int /* category */ , int /* severity */, int /* length */, CString /* message */, nint /* userParam */, void>
 
 GLFW:
     base-namespace: NiTiS.Native.GLFW

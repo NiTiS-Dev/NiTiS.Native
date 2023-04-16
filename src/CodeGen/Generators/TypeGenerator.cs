@@ -144,7 +144,7 @@ public sealed class TypeGenerator
 	{
 		foreach (EnumValueSignature val in sign.Entries)
 		{
-			cw.WriteLine($"{val.FieldName} =  unchecked(({sign.Parent.Name}){val.Value}),");
+			cw.WriteLine($"{(char.IsDigit(val.FieldName[0]) ? "_" + val.FieldName: val.FieldName)} =  unchecked(({sign.Parent.Name}){val.Value}),");
 		}
 	}
 	private void GenerateType(NonEnumSignature sign, CodeWriter cw)
@@ -184,6 +184,14 @@ public sealed class TypeGenerator
 		// Methods
 		foreach (FunctionSignature fun in sign.Functions)
 		{
+			// Comments
+			foreach (ArgumentSignature argSig in fun.Arguments)
+			{
+				if (argSig.Comment is null)
+					continue;
+
+				cw.WriteLine(@$"/// <param name=""{argSig.NativeName}"">{argSig.Comment}</param>");
+			}
 			cw.PushCompilerGenerated();
 			cw.PushInline();
 			cw.WriteIndent();
@@ -193,6 +201,10 @@ public sealed class TypeGenerator
 			cw.Write(' ');
 			if (fun.Name?.HasPrefix("glfw") ?? false)
 				cw.Write(fun.Name[4..]);
+			else if (fun.Name?.HasPrefix("gl") ?? false)
+				cw.Write(fun.Name[2..]);
+			else if (fun.Name?.HasPrefix("wgl") ?? false)
+				cw.Write(fun.Name[3..]);
 			else
 				cw.Write(fun?.Name ?? "__UNNAMED__");
 
@@ -241,35 +253,47 @@ public sealed class TypeGenerator
 		// Static ctor
 		if (functionsExists)
 		{
-			cw.WriteLine($"static unsafe {sign.Name}()");
-			cw.BeginBlock();
+			if (task.ContextualApi)
 			{
-				cw.WriteLine("global::NiTiS.Native.Loaders.NativeLibraryLoader loader;");
-				cw.WriteLine("global::NiTiS.Native.NativeLibraryReference lib;");
-				cw.WriteLine("loader = global::NiTiS.Native.Loaders.NativeLibraryLoader.DefaultPlatformLoader;");
-				cw.WriteLine("string libname = LibName();");
-				cw.WriteLine("lib = loader.LoadLibrary(libname);");
-
-				StringBuilder castName = new();
-				foreach (FunctionSignature fun in sign.Functions)
+				cw.WriteLine($"static unsafe {sign.Name}()");
+				cw.BeginBlock();
 				{
-					castName.Append("delegate* <");
-					{
-						foreach (ArgumentSignature arg in fun.Arguments)
-						{
-							castName.Append(arg.Type.Name);
-							castName.Append(", ");
-						}
 
-						castName.Append(fun.ReturnType.Name);
-					}
-					castName.Append(">");
-
-					cw.WriteLine($"@__{fun.Name} = ({castName})loader.GetProcAddress(lib, \"{fun.Name}\");");
-					castName.Clear();
 				}
+				cw.EndBlock();
 			}
-			cw.EndBlock();
+			else
+			{
+				cw.WriteLine($"static unsafe {sign.Name}()");
+				cw.BeginBlock();
+				{
+					cw.WriteLine("global::NiTiS.Native.Loaders.NativeLibraryLoader loader;");
+					cw.WriteLine("global::NiTiS.Native.NativeLibraryReference lib;");
+					cw.WriteLine("loader = global::NiTiS.Native.Loaders.NativeLibraryLoader.DefaultPlatformLoader;");
+					cw.WriteLine("string libname = LibName();");
+					cw.WriteLine("lib = loader.LoadLibrary(libname);");
+
+					StringBuilder castName = new();
+					foreach (FunctionSignature fun in sign.Functions)
+					{
+						castName.Append("delegate* <");
+						{
+							foreach (ArgumentSignature arg in fun.Arguments)
+							{
+								castName.Append(arg.Type.Name);
+								castName.Append(", ");
+							}
+
+							castName.Append(fun.ReturnType.Name);
+						}
+						castName.Append(">");
+
+						cw.WriteLine($"@__{fun.Name} = ({castName})loader.GetProcAddress(lib, \"{fun.Name}\");");
+						castName.Clear();
+					}
+				}
+				cw.EndBlock();
+			}
 		}
 	}
 	private string ConstCaseToPascalCase(string origin)
