@@ -258,7 +258,27 @@ public sealed class TypeGenerator
 				cw.WriteLine($"static unsafe {sign.Name}()");
 				cw.BeginBlock();
 				{
+					cw.WriteLine($"global::NiTiS.Native.INativeContext? c = global::NiTiS.Native.Loaders.ContextDome.GetContextByName(\"ContextName\");");
+					cw.WriteLine("if (c is null) throw new global::NiTiS.Native.ContextNotLoadedException();");
 
+					StringBuilder castName = new();
+					foreach (FunctionSignature fun in sign.Functions)
+					{
+						castName.Append("delegate* <");
+						{
+							foreach (ArgumentSignature arg in fun.Arguments)
+							{
+								castName.Append(arg.Type.Name);
+								castName.Append(", ");
+							}
+
+							castName.Append(fun.ReturnType.Name);
+						}
+						castName.Append(">");
+
+						cw.WriteLine($"@__{fun.Name} = ({castName})c.GetProcAddress(\"{fun.Name}\");");
+						castName.Clear();
+					}
 				}
 				cw.EndBlock();
 			}

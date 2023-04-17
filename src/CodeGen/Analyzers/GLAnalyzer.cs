@@ -132,13 +132,14 @@ public partial class GLAnalyzer : Analyzer
 	{
 		int pointers = 0;
 
-		for (int i = 0; i < type.Length; i++)
+		for (int i = 0; i < type.Length;)
 		{
 			if (type[i] == '*')
 			{
 				pointers++;
 				type = type.Remove(i, 1);
 			}
+			else i++;
 		}
 
 		type = type.RemovePrefix("struct");
@@ -157,16 +158,16 @@ public partial class GLAnalyzer : Analyzer
 		if (task.Map?.TypeMap?.TryGetValue(type, out string? mappedType) ?? false)
 		{
 			type = mappedType;
-		} else if (
-			type is "GLchar" && pointers is 1 ||
-			type is "GLubyte" && pointers is 1)
+		}
+		else if (type is "GLchar" or "GLcharARB" && pointers >= 1 || type is "GLubyte" && pointers >= 1)
 		{
-			return StdTypes.CString;
-		} else if (
-			type is "_cl_context" && pointers is 1 ||
-			type is "_cl_event" && pointers is 1)
+			type = StdTypes.CString.Name;
+			pointers--;
+		}
+		else if (type is "_cl_context" && pointers >= 1 || type is "_cl_event" && pointers >= 1)
 		{
-			return StdTypes.NInt;
+			type = StdTypes.NInt.Name;
+			pointers--;
 		}
 
 		return new StaticClassSignature() { Name = type + '*'.Repeat(pointers) };

@@ -5,6 +5,7 @@ OpenGL:
     - "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml"
     
     contextual-api: true
+
     analyzer:
         name: GLAnalyzer
 
@@ -15,7 +16,7 @@ OpenGL:
     map:
         typemap:
             GLenum: uint
-            GLboolean: byte /* boolean */
+            GLboolean: byte
             GLbitfield: uint
             GLbyte: sbyte
             GLubyte: byte
@@ -30,6 +31,7 @@ OpenGL:
             GLclampf: float
             GLdouble: double
             GLclampd: double
+            GLeglImageOES: nint
             GLeglClientBufferEXT: nint
             GLeglImageOESGLeglImageOES: nint
             GLvdpauSurfaceNV: nint
