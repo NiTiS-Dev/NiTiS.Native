@@ -258,7 +258,7 @@ public sealed class TypeGenerator
 				cw.WriteLine($"static unsafe {sign.Name}()");
 				cw.BeginBlock();
 				{
-					cw.WriteLine($"global::NiTiS.Native.INativeContext? c = global::NiTiS.Native.Loaders.ContextDome.GetContextByName(\"ContextName\");");
+					cw.WriteLine($"global::NiTiS.Native.INativeContext? c = global::NiTiS.Native.Loaders.ContextDome.GetContextByName(ContextName);");
 					cw.WriteLine("if (c is null) throw new global::NiTiS.Native.ContextNotLoadedException();");
 
 					StringBuilder castName = new();
