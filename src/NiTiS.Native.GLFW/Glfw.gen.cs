@@ -156,6 +156,11 @@ public partial class Glfw
 	[global::System.ComponentModel.BrowsableAttribute(false)]
 	[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public static unsafe readonly delegate* <int /* width */, int /* height */, CString /* title */, GlfwMonitor* /* monitor */, GlfwWindow* /* share */, GlfwWindow*> @__glfwCreateWindow;
+
+	[global::System.ComponentModel.BrowsableAttribute(false)]
+	[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public static unsafe readonly delegate* <GlfwWindow* /* window */, void> @__glfwDestroyWindow;
 
 	[global::System.ComponentModel.BrowsableAttribute(false)]
@@ -613,6 +618,11 @@ public partial class Glfw
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public static unsafe readonly delegate* <nint /* instance */, nint /* device */, uint /* queuefamily */, int> @__glfwGetPhysicalDevicePresentationSupport;
 
+	[global::System.ComponentModel.BrowsableAttribute(false)]
+	[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public static unsafe readonly delegate* <nint /* instance */, GlfwWindow* /* window */, nint /* allocator */, nint /* surface */, int> @__glfwCreateWindowSurface;
+
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 	public static unsafe int Init()
@@ -786,6 +796,12 @@ public partial class Glfw
 	public static unsafe void WindowHintString(int hint, CString value)
 	{
 		 @__glfwWindowHintString(hint, value);
+	}
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+	public static unsafe GlfwWindow* CreateWindow(int width, int height, CString title, GlfwMonitor* monitor, GlfwWindow* share)
+	{
+		return @__glfwCreateWindow(width, height, title, monitor, share);
 	}
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -1339,6 +1355,12 @@ public partial class Glfw
 	{
 		return @__glfwGetPhysicalDevicePresentationSupport(instance, device, queuefamily);
 	}
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+	public static unsafe int CreateWindowSurface(nint instance, GlfwWindow* window, nint allocator, nint surface)
+	{
+		return @__glfwCreateWindowSurface(instance, window, allocator, surface);
+	}
 	static unsafe Glfw()
 	{
 		global::NiTiS.Native.Loaders.NativeLibraryLoader loader;
@@ -1375,6 +1397,7 @@ public partial class Glfw
 		@__glfwDefaultWindowHints = (delegate* <void>)loader.GetProcAddress(lib, "glfwDefaultWindowHints");
 		@__glfwWindowHint = (delegate* <int, int, void>)loader.GetProcAddress(lib, "glfwWindowHint");
 		@__glfwWindowHintString = (delegate* <int, CString, void>)loader.GetProcAddress(lib, "glfwWindowHintString");
+		@__glfwCreateWindow = (delegate* <int, int, CString, GlfwMonitor*, GlfwWindow*, GlfwWindow*>)loader.GetProcAddress(lib, "glfwCreateWindow");
 		@__glfwDestroyWindow = (delegate* <GlfwWindow*, void>)loader.GetProcAddress(lib, "glfwDestroyWindow");
 		@__glfwWindowShouldClose = (delegate* <GlfwWindow*, int>)loader.GetProcAddress(lib, "glfwWindowShouldClose");
 		@__glfwSetWindowShouldClose = (delegate* <GlfwWindow*, int, void>)loader.GetProcAddress(lib, "glfwSetWindowShouldClose");
@@ -1467,6 +1490,7 @@ public partial class Glfw
 		@__glfwGetRequiredInstanceExtensions = (delegate* <uint*, CString*>)loader.GetProcAddress(lib, "glfwGetRequiredInstanceExtensions");
 		@__glfwGetInstanceProcAddress = (delegate* <nint, CString, nint>)loader.GetProcAddress(lib, "glfwGetInstanceProcAddress");
 		@__glfwGetPhysicalDevicePresentationSupport = (delegate* <nint, nint, uint, int>)loader.GetProcAddress(lib, "glfwGetPhysicalDevicePresentationSupport");
+		@__glfwCreateWindowSurface = (delegate* <nint, GlfwWindow*, nint, nint, int>)loader.GetProcAddress(lib, "glfwCreateWindowSurface");
 	}
 }
 

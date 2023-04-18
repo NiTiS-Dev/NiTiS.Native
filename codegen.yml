@@ -105,6 +105,7 @@ GLFW:
             GLFWdropfun: delegate* <GlfwWindow* /* window */, int /* path_count */, CString* /* paths */, void>
             PFN_vkGetInstanceProcAddr: delegate* unmanaged[Stdcall]<nint /* instance */, CString /* pName */, delegate* unmanaged[Stdcall]<void>>
             VkInstance: nint
+            VkResult: int
             VkPhysicalDevice: nint
 
         rename:

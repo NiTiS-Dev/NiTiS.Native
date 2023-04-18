@@ -13,7 +13,7 @@ public sealed partial class GLFWAnalyzer : Analyzer
 	[GeneratedRegex(@"^#define( )+(?<DEF_NAME>\w+)( )+(?<DEF_VAL>.+)$", RegexOptions.Multiline)]
 	private static partial Regex DefineRegex();
 
-	[GeneratedRegex(@"^GLFWAPI( )*(const)?( )*(?<UNSIGNED>unsigned)?( )*(?<RETURN>[a-zA-Z0-9*&_]*)( )*(?<FUNC_NAME>[a-zA-Z0-9]*)( )*\((?<ARGUMENTS>(((const)?( )*(unsigned)?( )*([a-zA-Z0-9*&_\[\]]*)( )*([a-zA-Z0-9]*)?,)*( )*(const)?( )*(unsigned)?( )*([a-zA-Z0-9*&_\[\]]*)( )*([a-zA-Z0-9]*)?))?\);", RegexOptions.Multiline)]
+	[GeneratedRegex(@"^GLFWAPI( )*(const)?( )*(?<UNSIGNED>unsigned)?( )*(?<RETURN>[a-zA-Z0-9*&_]*)( )*(?<FUNC_NAME>[a-zA-Z0-9]*)( )*\((?<ARGUMENTS>(((const)?( )*(unsigned)?( )*([a-zA-Z0-9*&_\[\]]*)( )*([a-zA-Z0-9]*)?,?)*))\);", RegexOptions.Multiline)]
 	private static partial Regex FunctionRegex();
 
 	[GeneratedRegex(@"(?<ARGS>()*(const)?( )*(?<U>unsigned)?()*(?<RETURN>[a-zA-Z0-9*&_]*)( )*,?()*)*")]
@@ -216,13 +216,17 @@ public sealed partial class GLFWAnalyzer : Analyzer
 				selectedType = StdTypes.UInt;
 				break;
 
-			case "char":
+			case "char" when pointers >= 1:
 				selectedType = unsigned ? StdTypes.Byte : StdTypes.SByte;
-				if (!unsigned && pointers >= 1)
+				if (!unsigned)
 				{
 					selectedType = StdTypes.CString;
 					pointers--;
 				}
+				break;
+			case "VkAllocationCallbacks" or "VkSurfaceKHR" when pointers >= 1:
+				pointers--;
+				selectedType = StdTypes.NInt;
 				break;
 			case "short":
 			case "int16_t":
