@@ -1,6 +1,7 @@
 ﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,8 @@ partial class Build
 					.SetTargetPath(package)
 					.SetSource("https://api.nuget.org/v3/index.json");
 
+				Log.Information("NugetPush: {0}", package);
+
 				using IProcess proc = StartProcess(push);
 				proc.AssertZeroExitCode();
 			}
@@ -45,6 +48,8 @@ partial class Build
 					.SetApiKey(Environment.GetEnvironmentVariable("GITHUB_TOKEN"))
 					.SetTargetPath(package)
 					.SetSource("https://nuget.pkg.github.com/NiTiS-Dev/index.json");
+
+				Log.Information("GitHubPush: {0}", package);
 
 				using IProcess proc = StartProcess(push);
 				proc.AssertZeroExitCode();
