@@ -1,5 +1,9 @@
 ﻿#if NET6_0_OR_GREATER
+using System;
+using System.Reflection.Metadata;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace NiTiS.Native.Loaders;
 
@@ -10,22 +14,38 @@ internal class NetLibraryLoader : NativeLibraryLoader
 {
 	public override NativeFunctionReference GetProcAddress(NativeLibraryReference handle, string methodName)
 	{
-		if (NativeLibrary.TryGetExport(handle.Handle, methodName, out nint retusa))
+		nint retusa = default;
+		try
 		{
-			return new(retusa);
+			if (NativeLibrary.TryGetExport(handle.Handle, methodName, out retusa))
+			{
+				goto RETURN;
+			}
 		}
+		catch (ArgumentNullException) { }
 
-		return default;
+	RETURN:
+		return retusa;
 	}
-
 	public override NativeLibraryReference LoadLibrary(string path)
 	{
-		if (NativeLibrary.TryLoad(path, out nint retusa))
+		nint retusa = default;
+		try
 		{
-			return new(retusa);
+			if (NativeLibrary.TryLoad(path, out retusa))
+			{
+				goto RETURN;
+			}
+			else if (retusa == IntPtr.Zero &&
+				NativeLibrary.TryLoad(Path.Combine(AlternatePath, path), out retusa))
+			{
+				goto RETURN;
+			}
 		}
+		catch (ArgumentNullException) { }
 
-		return default;
+	RETURN:
+		return retusa;
 	}
 
 	public override void UnloadLibrary(NativeLibraryReference handle)

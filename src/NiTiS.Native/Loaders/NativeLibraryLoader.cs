@@ -40,7 +40,35 @@ public abstract unsafe class NativeLibraryLoader
 	{
 		dst = (void*)GetProcAddress(handle, methodName).Handle;
 	}
-	internal virtual string? AlternatePath => null;
+	internal virtual string? AlternatePath
+		=> MachineInfo.IsWindows
+			? MachineInfo.Architecture switch
+			{
+				Architecture.X64 => "runtimes/win-x64/native",
+				Architecture.X86 => "runtimes/win-x86/native",
+				Architecture.Arm => "runtimes/win-arm/native",
+				Architecture.Arm64 => "runtimes/win-arm64/native",
+				_ => null
+			}
+			: MachineInfo.IsLinux
+			? MachineInfo.Architecture switch
+			{
+				Architecture.X64 => "runtimes/linux-x64/native",
+				Architecture.X86 => "runtimes/linux-x86/native",
+				Architecture.Arm => "runtimes/linux-arm/native",
+				Architecture.Arm64 => "runtimes/linux-arm64/native",
+				_ => null
+			}
+			: MachineInfo.IsMacos
+			? MachineInfo.Architecture switch
+			{
+				Architecture.X64 => "runtimes/osx-x64/native",
+				Architecture.Arm64 => "runtimes/osx-arm64/native",
+				Architecture.Arm => "runtimes/osx-arm/native",
+				Architecture.X86 => "runtimes/osx-x86/native",
+			}
+			: throw new NotImplementedException()
+			;
 
 	private static NativeLibraryLoader? loader;
 
