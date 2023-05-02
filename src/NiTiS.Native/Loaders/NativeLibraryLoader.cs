@@ -59,12 +59,16 @@ public abstract unsafe class NativeLibraryLoader
 	/// <returns><see langword="null"/> when platform is not supported.</returns>
 	public static NativeLibraryLoader? CreateDefaultPlatformLoader()
 	{
+#if NET6_0_OR_GREATER
+		return new NetLibraryLoader();
+#endif
+
 		if (MachineInfo.IsWindows)
 			return new WindowsLibraryLoader();
 		else if (MachineInfo.IsLinux)
 			return new UnixLibraryLoader();
 		else if (MachineInfo.IsMacos || RuntimeInformation.OSDescription.ToUpper().Contains("BSD"))
-			return new BSDLibraryNativeLoader();
+			return new BSDLibraryLoader();
 
 		return null;
 	}

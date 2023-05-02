@@ -83,7 +83,7 @@ GLFW:
             GLFWallocator: GlfwAllocator
             GLFWglproc: nint
             GLFWvkproc: nint
-            GLFWerrorfun: delegate* <int /* error_code */, CString /* description */, void>
+            GLFWerrorfun: delegate* <GlfwError /* error_code */, CString /* description */, void>
             GLFWmonitorfun: delegate* <GlfwMonitor* /* monitor */, int /* event */, void>
             GLFWwindowposfun: delegate* <GlfwWindow* /* window */, int /* xpos */, int /* ypos */, void>
             GLFWwindowsizefun: delegate* <GlfwWindow* /* window */, int /* width */, int /* height */, void>

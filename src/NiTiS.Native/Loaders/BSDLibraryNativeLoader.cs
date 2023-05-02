@@ -8,7 +8,7 @@ namespace NiTiS.Native.Loaders;
 /// <summary>
 /// Native library loader for BSD systems.
 /// </summary>
-public sealed unsafe class BSDLibraryNativeLoader : NativeLibraryLoader
+public sealed unsafe class BSDLibraryLoader : NativeLibraryLoader
 {
 	private const string LibAPI = "libdl";
 	private const int RtldNow = 0x002;

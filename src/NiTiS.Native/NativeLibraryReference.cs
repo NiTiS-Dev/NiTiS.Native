@@ -22,6 +22,24 @@ public readonly struct NativeLibraryReference
 		Handle = (nint)handle;
 	}
 
+	/// <summary>
+	/// Wrap a library handle.
+	/// </summary>
+	/// <param name="handle">Library handle.</param>
+	public unsafe NativeLibraryReference(nint handle)
+	{
+		Handle = handle;
+	}
+
+	/// <summary>
+	/// Wrap a library handle.
+	/// </summary>
+	/// <param name="handle">Library handle.</param>
+	public unsafe NativeLibraryReference(nuint handle)
+	{
+		Handle = (nint)handle;
+	}
+
 	/// <inheritdoc/>
 	public override string ToString()
 		=> Handle.ToString();
