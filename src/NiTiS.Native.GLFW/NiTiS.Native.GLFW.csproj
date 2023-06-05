@@ -11,6 +11,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="../NiTiS.Native/NiTiS.Native.csproj" />
-		<PackageReference Include="NiTiS.Core" Version="3.4.3" />
 	</ItemGroup>
 </Project>
