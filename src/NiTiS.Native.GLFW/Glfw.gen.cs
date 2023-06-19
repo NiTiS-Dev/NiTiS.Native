@@ -51,7 +51,7 @@ public partial class Glfw
 	[global::System.ComponentModel.BrowsableAttribute(false)]
 	[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public static unsafe readonly delegate* <delegate* <int /* error_code */, CString /* description */, void> /* callback */, delegate* <int /* error_code */, CString /* description */, void>> @__glfwSetErrorCallback;
+	public static unsafe readonly delegate* <delegate* <GlfwError /* error_code */, CString /* description */, void> /* callback */, delegate* <GlfwError /* error_code */, CString /* description */, void>> @__glfwSetErrorCallback;
 
 	[global::System.ComponentModel.BrowsableAttribute(false)]
 	[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
@@ -673,7 +673,7 @@ public partial class Glfw
 	}
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	[global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-	public static unsafe delegate* <int /* error_code */, CString /* description */, void> SetErrorCallback(delegate* <int /* error_code */, CString /* description */, void> callback)
+	public static unsafe delegate* <GlfwError /* error_code */, CString /* description */, void> SetErrorCallback(delegate* <GlfwError /* error_code */, CString /* description */, void> callback)
 	{
 		return @__glfwSetErrorCallback(callback);
 	}
@@ -1376,7 +1376,7 @@ public partial class Glfw
 		@__glfwGetVersion = (delegate* <int*, int*, int*, void>)loader.GetProcAddress(lib, "glfwGetVersion");
 		@__glfwGetVersionString = (delegate* <CString>)loader.GetProcAddress(lib, "glfwGetVersionString");
 		@__glfwGetError = (delegate* <CString*, int>)loader.GetProcAddress(lib, "glfwGetError");
-		@__glfwSetErrorCallback = (delegate* <delegate* <int /* error_code */, CString /* description */, void>, delegate* <int /* error_code */, CString /* description */, void>>)loader.GetProcAddress(lib, "glfwSetErrorCallback");
+		@__glfwSetErrorCallback = (delegate* <delegate* <GlfwError /* error_code */, CString /* description */, void>, delegate* <GlfwError /* error_code */, CString /* description */, void>>)loader.GetProcAddress(lib, "glfwSetErrorCallback");
 		@__glfwGetPlatform = (delegate* <int>)loader.GetProcAddress(lib, "glfwGetPlatform");
 		@__glfwPlatformSupported = (delegate* <int, int>)loader.GetProcAddress(lib, "glfwPlatformSupported");
 		@__glfwGetMonitors = (delegate* <int*, GlfwMonitor**>)loader.GetProcAddress(lib, "glfwGetMonitors");

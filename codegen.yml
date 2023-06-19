@@ -183,4 +183,59 @@ GLFW:
               to: GLFW_PLATFORM_NULL
               name: GlfwPlatform
 
+SDL3:
+    base-namespace: NiTiS.Native.SDL3
+    include:
+    - "build/submodules/SDL/include/SDL3/SDL_stdinc.h"
+    - "build/submodules/SDL/include/SDL3/SDL_assert.h"
+    - "build/submodules/SDL/include/SDL3/SDL_atomic.h"
+    - "build/submodules/SDL/include/SDL3/SDL_audio.h"
+    - "build/submodules/SDL/include/SDL3/SDL_bits.h"
+    - "build/submodules/SDL/include/SDL3/SDL_blendmode.h"
+    - "build/submodules/SDL/include/SDL3/SDL_clipboard.h"
+    - "build/submodules/SDL/include/SDL3/SDL_cpuinfo.h"
+    - "build/submodules/SDL/include/SDL3/SDL_endian.h"
+    - "build/submodules/SDL/include/SDL3/SDL_error.h"
+    - "build/submodules/SDL/include/SDL3/SDL_events.h"
+    - "build/submodules/SDL/include/SDL3/SDL_filesystem.h"
+    - "build/submodules/SDL/include/SDL3/SDL_gamepad.h"
+    - "build/submodules/SDL/include/SDL3/SDL_guid.h"
+    - "build/submodules/SDL/include/SDL3/SDL_haptic.h"
+    - "build/submodules/SDL/include/SDL3/SDL_hidapi.h"
+    - "build/submodules/SDL/include/SDL3/SDL_hints.h"
+    - "build/submodules/SDL/include/SDL3/SDL_init.h"
+    - "build/submodules/SDL/include/SDL3/SDL_joystick.h"
+    - "build/submodules/SDL/include/SDL3/SDL_keyboard.h"
+    - "build/submodules/SDL/include/SDL3/SDL_keycode.h"
+    - "build/submodules/SDL/include/SDL3/SDL_loadso.h"
+    - "build/submodules/SDL/include/SDL3/SDL_locale.h"
+    - "build/submodules/SDL/include/SDL3/SDL_log.h"
+    - "build/submodules/SDL/include/SDL3/SDL_messagebox.h"
+    - "build/submodules/SDL/include/SDL3/SDL_metal.h"
+    - "build/submodules/SDL/include/SDL3/SDL_misc.h"
+    - "build/submodules/SDL/include/SDL3/SDL_mouse.h"
+    - "build/submodules/SDL/include/SDL3/SDL_mutex.h"
+    - "build/submodules/SDL/include/SDL3/SDL_pixels.h"
+    - "build/submodules/SDL/include/SDL3/SDL_platform.h"
+    - "build/submodules/SDL/include/SDL3/SDL_power.h"
+    - "build/submodules/SDL/include/SDL3/SDL_quit.h"
+    - "build/submodules/SDL/include/SDL3/SDL_rect.h"
+    - "build/submodules/SDL/include/SDL3/SDL_render.h"
+    - "build/submodules/SDL/include/SDL3/SDL_rwops.h"
+    - "build/submodules/SDL/include/SDL3/SDL_scancode.h"
+    - "build/submodules/SDL/include/SDL3/SDL_sensor.h"
+    - "build/submodules/SDL/include/SDL3/SDL_shape.h"
+    - "build/submodules/SDL/include/SDL3/SDL_surface.h"
+    - "build/submodules/SDL/include/SDL3/SDL_system.h"
+    - "build/submodules/SDL/include/SDL3/SDL_thread.h"
+    - "build/submodules/SDL/include/SDL3/SDL_timer.h"
+    - "build/submodules/SDL/include/SDL3/SDL_touch.h"
+    - "build/submodules/SDL/include/SDL3/SDL_version.h"
+    - "build/submodules/SDL/include/SDL3/SDL_video.h"
 
+    analyzer:
+        name: SDL3Analyzer
+    
+    output:
+        target-directory: src/NiTiS.Native.SDL3/
+        main-class: NiTiS.Native.SDL3:Sdl3

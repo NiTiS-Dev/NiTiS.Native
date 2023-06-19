@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.SDL.Container"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiTiS.Native.OpenGL", "src\NiTiS.Native.OpenGL\NiTiS.Native.OpenGL.csproj", "{C5362563-40D3-4551-BBEF-77BFCE95C114}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiTiS.Native.SDL3", "src\NiTiS.Native.SDL3\NiTiS.Native.SDL3.csproj", "{CE250815-6021-4B14-8B0A-2A6C4FA0A2A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{C5362563-40D3-4551-BBEF-77BFCE95C114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5362563-40D3-4551-BBEF-77BFCE95C114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5362563-40D3-4551-BBEF-77BFCE95C114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE250815-6021-4B14-8B0A-2A6C4FA0A2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE250815-6021-4B14-8B0A-2A6C4FA0A2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE250815-6021-4B14-8B0A-2A6C4FA0A2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE250815-6021-4B14-8B0A-2A6C4FA0A2A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<BindingAPI>true</BindingAPI>
+		<Description>The package that provides binding to the third version of SDL API</Description>
+
+		<FrameworkPack>Default</FrameworkPack>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)/build/props/common.props" />
+
+	<ItemGroup>
+		<ProjectReference Include="../NiTiS.Native/NiTiS.Native.csproj" />
+	</ItemGroup>
+</Project>
