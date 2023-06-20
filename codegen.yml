@@ -239,3 +239,7 @@ SDL3:
     output:
         target-directory: src/NiTiS.Native.SDL3/
         main-class: NiTiS.Native.SDL3:Sdl3
+
+    map:
+        typemap:
+            SDL_JoystickID: SdlJoystickId

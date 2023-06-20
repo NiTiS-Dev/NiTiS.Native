@@ -205,6 +205,8 @@ public sealed class TypeGenerator
 				cw.Write(fun.Name[2..]);
 			else if (fun.Name?.HasPrefix("wgl") ?? false)
 				cw.Write(fun.Name[3..]);
+			else if (fun.Name?.HasPrefix("SDL_") ?? false)
+				cw.Write(fun.Name[4..]);
 			else
 				cw.Write(fun?.Name ?? "__UNNAMED__");
 
@@ -326,6 +328,7 @@ public sealed class TypeGenerator
 		int index
 			= origin.StartsWith("GLFW_") ? 5
 			: origin.StartsWith("GL_") ? 3
+			: origin.StartsWith("SDL_") ? 4
 			: 0
 			;
 

@@ -4,7 +4,7 @@ namespace CodeGen.Signature;
 
 public static class StdTypes
 {
-	public static NonEnumSignature
+	public static readonly NonEnumSignature
 		Object,
 		String,
 		CString,
@@ -20,7 +20,8 @@ public static class StdTypes
 		NUInt,
 		Float,
 		Double,
-		Void
+		Void,
+		Boolean
 		;
 
 
@@ -105,6 +106,11 @@ public static class StdTypes
 		{
 			Name = "double",
 			FullName = "System.Double"
+		};
+		Boolean = new StdTypeSignature()
+		{
+			Name = "bool",
+			FullName = "System.Boolean"
 		};
 	}
 	private sealed class StdTypeSignature : NonEnumSignature
