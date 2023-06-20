@@ -79,6 +79,8 @@ public sealed class CodeGenAnalyzer
 [YamlSerializable]
 public sealed class CodeGenMap
 {
+	[YamlMember(Alias = "ignore")]
+	public string[] IgnoreFunctions { get; set; }
 	[YamlMember(Alias = "typemap")]
 	public Dictionary<string, string>? TypeMap { get; set; }
 	[YamlMember(Alias = "rename")]

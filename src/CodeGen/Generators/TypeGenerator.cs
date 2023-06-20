@@ -154,6 +154,9 @@ public sealed class TypeGenerator
 		// Delegates
 		foreach (FunctionSignature fun in sign.Functions)
 		{
+			if (task.Map.IgnoreFunctions?.Contains(fun.Name) ?? false)
+				continue;
+
 			cw.PushHide();
 			cw.PushEditorHide();
 			cw.PushCompilerGenerated();

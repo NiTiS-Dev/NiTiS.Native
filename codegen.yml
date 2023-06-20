@@ -241,5 +241,31 @@ SDL3:
         main-class: NiTiS.Native.SDL3:Sdl3
 
     map:
+        ignore: [ # Remove unnecesary methods
+            "SDL_bsearch",
+            "SDL_qsort",
+            "SDL_wcslcpy",
+            "SDL_wcslcat",
+            "SDL_wcscmp",
+            "SDL_strlcpy",
+            "SDL_utf8strlcpy",
+            "SDL_strlcat",
+            "SDL_strtol",
+            "SDL_sscanf",
+            "SDL_snprintf",
+            "SDL_vsscanf",
+            "SDL_vsnprintf",
+            "SDL_asprintf",
+            "SDL_vasprintf",
+            "SDL_lroundf",
+            "SDL_lround",
+            "SDL_ReportAssertion",
+            "SDL_SetAssertionHandler",
+            "SDL_GetDefaultAssertionHandler",
+            "SDL_ResetAssertionReport",
+        ]
         typemap:
             SDL_JoystickID: SdlJoystickId
+            SDL_FlashOperation: FlashOperation
+            SDL_bool: SdlBool
+            size_t: nuint

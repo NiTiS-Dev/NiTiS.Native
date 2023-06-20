@@ -25,7 +25,6 @@ public sealed partial class SDL3Analyzer : Analyzer
 			string args = match.Groups["ARGS"].Value.Replace('\n', ' ').Replace('\r', ' ');
 			string funName = "SDL_" + match.Groups["FUNAME"].Value;
 
-
 			FunctionSignature sing = new()
 			{
 				Name = funName,
@@ -46,7 +45,7 @@ public sealed partial class SDL3Analyzer : Analyzer
 				int varNameLen = varName.Length;
 				string argTypeName = argLine.Remove(argLine.Length - varNameLen, varNameLen).Trim();
 
-				Console.WriteLine($"{argLine} -> {GetType(task, argTypeName).Name}");
+				//Console.WriteLine($"{argLine} -> {GetType(task, argTypeName).Name}");
 
 				sing.Arguments.Add(new ArgumentSignature()
 				{
@@ -64,10 +63,24 @@ public sealed partial class SDL3Analyzer : Analyzer
 	{
 		bool @const = false;
 
+		if (typeName.StartsWith("SDL_OUT_Z_CAP("))
+		{
+			typeName = typeName["SDL_OUT_Z_CAP(".Length..];
+		}
+
 		if (typeName.HasPrefix("const"))
 		{
 			@const = true;
 			typeName = typeName["const".Length..].Trim();
+
+			for (int i = 0; i < typeName.Length; i++)
+			{
+				if (typeName[i] == ')')
+				{
+					typeName = typeName[i..];
+					break;
+				}
+			}
 		}
 
 		int ptrs = 0;
@@ -106,7 +119,7 @@ public sealed partial class SDL3Analyzer : Analyzer
 			case "void":
 				selectedType = StdTypes.Void;
 				break;
-			case "char":
+			case "char" or "wchar_t":
 				selectedType = (@const && ptrs > 0) ? StdTypes.CString : StdTypes.SByte;
 				if (ptrs > 0)
 					ptrs--;
@@ -135,7 +148,7 @@ public sealed partial class SDL3Analyzer : Analyzer
 			case "Uint16":
 				selectedType = StdTypes.UShort;
 				break;
-			case "Sint64":
+			case "Sint64" or "long":
 				selectedType = StdTypes.Long;
 				break;
 			case "Uint64":
